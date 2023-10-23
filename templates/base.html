@@ -1,0 +1,27 @@
+<!doctype html>
+{% load static %}
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    
+    <link href="{% static 'css/bootstrap.css'%}" rel="stylesheet"  >
+    <link href="{% static 'css/dashboard.css'%}" rel="stylesheet"  >
+  </head>  
+  
+  <body>
+   
+    {% include 'navbar.html' %}
+    {% include 'sidebarmenu.html' %}
+   
+    {% block content %}{% endblock content %}
+   
+    <script src="{% static 'js/bootstrap.bundle.js' %}"  crossorigin="anonymous"></script>
+    <script src="{% static 'js/charts.js' %}"  crossorigin="anonymous"></script>
+    <script src="{% static 'js/feather.js' %}"  crossorigin="anonymous"></script>
+    <script src="{% static 'js/dashboard.js' %}"  crossorigin="anonymous"></script>
+  </body>
+  </body>
+</html>
