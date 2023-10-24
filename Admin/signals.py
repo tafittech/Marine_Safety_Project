@@ -16,7 +16,7 @@ def createStaff(sender, instance, created,*args, **kwargs):
             email = user.email,
             name  = user.full_name 
         )
-   
+        print('profile created' )
 
 
 @receiver(post_delete,sender=AdminProfile)

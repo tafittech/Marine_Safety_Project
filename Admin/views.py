@@ -16,12 +16,11 @@ def loginUser(request):
     page = 'login'
 
     if request.user.is_authenticated:
-        return redirect('profile') 
+        return redirect('account') 
 
     if request.method ==  'POST':
         email = request.POST['email']
-        password = request.POST['password']
-        
+        password = request.POST['password']        
         try:
             user = User.objects.get(email=email)
         except:
@@ -53,9 +52,9 @@ def register(request):
             user.save()
             messages.success(request, 'User acount was created!')
             login(request, user)
-            return redirect('profiles')
+            return redirect('account')
         else:
-            messages.success(request, 'An error has occurred during registration')
+            messages.warning(request, 'An error has occurred during registration')
     return render(request, 'login_register.html',{'page':page,'form':form} )
 
 
@@ -64,7 +63,7 @@ def register(request):
 
 def profile(request):
     profiles = AdminProfile.objects.all() 
-    return render(request, 'profiles.html', {'staff':profiles })
+    return render(request, 'profiles.html', {'account':profiles })
 
 
 def staff(request, pk):

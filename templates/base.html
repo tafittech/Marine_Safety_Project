@@ -17,9 +17,27 @@
     {% include 'snippet/theme_button.html'%}
     {% include 'navbar.html' %}
     {% include 'sidebarmenu.html' %}
+    
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      {% if messages %}
+            <div class="alert alert-danger" role="alert">
+                
+          <ul class="messages">
+        {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+        {{ message }}
+              </li>
+        {% endfor %}
+          </ul>
+            </div> 
+      {% endif %}
+       
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-       {% block content %}{% endblock content %}   
+      
+       {% block content %}
+       {% endblock content %} 
+    
       </div>
     
    

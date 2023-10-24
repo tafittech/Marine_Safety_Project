@@ -23,6 +23,13 @@ class RegisterForm(UserCreationForm):
             'email', 'full_name',
             'password1', 'password2',
         ]
+    
+    def __init__(self, *args,**kwargs):
+        super(RegisterForm, self).__init__(*args,*kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class':'input-group-text'})
+            
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -34,9 +41,10 @@ class RegisterForm(UserCreationForm):
 
     def save(self, commit=True):
         # save the provided password in hashed format
-        user = super(RegisterForm,self).save(commit=False)
+        user = super(RegisterForm,self).save(commit=True    )
         user.set_password(self.cleaned_data["password1"])
-        user.active = False
+        user.active =True
+        user.staff=True
         if commit:
             user.save()
         return user

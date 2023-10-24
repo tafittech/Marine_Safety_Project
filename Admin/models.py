@@ -114,4 +114,4 @@ class AdminProfile(models.Model):
     staff_info = models.TextField(max_length=500, blank=True, null=True)
 
     def __str__(self):
-        return str(self.email)
+        return str(self.user)
