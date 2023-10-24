@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+<label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="inputPassword3">
+
+{% block content %} 
+        {% if page == 'register' %}
+        <form method="POST" action="{% url 'register' %}">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Register User" />
+        <p>Already have an account  <a href="{% url 'login' %}">Login In</a></p>
+        </form>
+        
+        {% else %}
+<form method="POST" action="{% url 'login'%}" class="row gy-2 gx-3 align-items-center">
+    {% csrf_token %}
+  <div class="col-auto">
+    <label class="visually-hidden" for="inputEmail3">Email</label>
+    <div class="input-group">
+    <div class="input-group-text">Email </div>
+    <input type="text"  name="email" class="form-control" id="inputEmail3" placeholder="jandoe@gmail.com">
+    </div>
+  </div>
+  <div class="col-auto">
+    <label class="visually-hidden" for="inputPassword3">Password </label>
+    <div class="input-group">
+      <div class="input-group-text">Password</div>
+      <input type="password"  name="password" class="form-control" id="inputPassword3" placeholder="password123">
+    </div>
+  </div>
+<!--  
+  <div class="col-auto">
+    <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+    <select class="form-select" id="autoSizingSelect">
+      <option selected>Choose...</option>
+      <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+    </select>
+  </div>
+  <div class="col-auto">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="autoSizingCheck">
+      <label class="form-check-label" for="autoSizingCheck">
+        Remember me
+      </label>
+    </div>
+  </div>
+-->
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <p>Don't have an account  <a href="{% url 'register' %}">sign up</a></p>
+  </div>
+</form>
+
+
+{% endif %}
+
+{% include 'snippets/jumbotron.html' %}
+
+{% endblock content%}
