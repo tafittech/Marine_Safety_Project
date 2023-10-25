@@ -3,15 +3,17 @@ from django.urls import path
 
 from .views import (
     home, register, loginUser,
-    logoutUser, profile,staff
+    logoutUser, profile,staff,
+    userAccount
 )
 
 
 urlpatterns = [
-    path('', home, name= 'dashboard'),
+    path('dashboard/', home, name= 'dashboard'),
     path('login/', loginUser , name= 'login'),
-    path('register/', register , name= 'register'),
     path('logout/', logoutUser , name= 'logout'),
-    path('account/', profile , name= 'account'),
-    path('account/<str:pk>/', staff , name= 'staff'),
+    path('register/', register , name= 'register'),
+    path('profile/', profile , name= 'account'),
+    path('profile/<str:pk>/', staff , name= 'staff'),
+    path('account/', userAccount , name= 'user'),
 ]

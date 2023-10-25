@@ -4,16 +4,23 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
-  {% if user.is_authenticated %}
+  {% if user.is_authenticated == user.active %}
+  <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+      <a class="nav-link px-3" href="{% url 'user' %}">Account</a>
+    </div>
+  </div> 
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
       <a class="nav-link px-3" href="{% url 'logout' %}">logout</a>
     </div>
+  </div>  
     {% else %}
-    <div class="navbar-nav">
+  <div class="navbar-nav">
     <div class="nav-item text-nowrap">
       <a class="nav-link px-3" href="{% url 'login' %}">Login/Signup</a>
     </div>
+  </div>  
     {% endif %}
   </div>
 </header>

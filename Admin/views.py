@@ -1,7 +1,10 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth import get_user_model
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.contrib.auth import (
+    login, logout, authenticate, get_user_model
+) 
+
 
 from .models import AdminProfile
 from .forms  import RegisterForm 
@@ -69,5 +72,9 @@ def profile(request):
 def staff(request, pk):
     staff = AdminProfile.objects.get(id=pk)
     return render(request, 'user-profiles.html', {'user':staff })
+
+
+def userAccount(request):
+    return render(request, 'user-account.html', {})
 
 
