@@ -1,20 +1,34 @@
 {%extends 'base.html' %}
+{% load static %}
+
+
+
 
 
 
 {% block content %}
 
         
-<section class="w-100 vh-99" style="background-color: #9de2ff;">
+<section class="card-body rounded-3 " style="background-color: #cfd4d5;">
+  <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'account' %}">Profile</a></li>
+            <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+          </ol>
+        </nav>
+      </div>
   <div class="align-items-center py-5">
         <div class="container py-5 h-100">
+          
         <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col col-md-9 col-lg-7 col-xl-5">
         <div class="card" style="border-radius: 15px;">
           <div class="card-body p-75">
             <div class="d-flex text-black">
               <div class="flex-shrink-0">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                <img src="{{ user.profile_image.url }}"
                   alt="Generic placeholder image" class="img-fluid"
                   style="width: 180px; border-radius: 10px;">
               </div>
@@ -38,9 +52,8 @@
                 </div>
                 <div class="d-flex pt-1">
                       <button type="button" class="btn btn-outline-primary me-1 flex-grow-1">Chat</button>
-                      <a href="{% url 'account' %}">
-                        <button type="submit"   class="btn btn-primary flex-grow-1">
-                        back
+                      <button type="button"   class="btn btn-primary flex-grow-1">
+                        Follow
                       </button>
                       </a>     
                 </div>

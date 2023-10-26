@@ -74,7 +74,8 @@ def staff(request, pk):
     return render(request, 'user-profiles.html', {'user':staff })
 
 
+@login_required(login_url='login')
 def userAccount(request):
-    return render(request, 'user-account.html', {})
-
+    user_account = request.user.adminprofile
+    return render(request, 'user-account.html', {'user':user_account})
 

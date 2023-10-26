@@ -108,11 +108,15 @@ class User(AbstractBaseUser):
         return self.active
     
 class AdminProfile(models.Model):
-    user      = models.OneToOneField(User,on_delete=models.CASCADE, null=True , blank=True)
-    name       = models.CharField(max_length=255, blank=True, null=True)
-    email      = models.EmailField(max_length=255, blank=True, null=True)
-    staff_info = models.CharField(max_length=200, blank=True, null=True)
-    bio_info   = models.TextField(max_length=500, blank=True, null=True)
+    user          = models.OneToOneField(User,on_delete=models.CASCADE, null=True , blank=True)
+    name          = models.CharField(max_length=255, blank=True, null=True)
+    profile_image = models.ImageField(blank=True, null=True, default= 'default1.jpeg')
+    email         = models.EmailField(max_length=255, blank=True, null=True)
+    address       = models.CharField(max_length=255, blank=True, null=True)
+    phone         = models.CharField(max_length=255, blank=True, null=True)
+    mobile        = models.CharField(max_length=255, blank=True, null=True)
+    staff_info    = models.CharField(max_length=200, blank=True, null=True)
+    bio_info      = models.TextField(max_length=500, blank=True, null=True)
 
     def __str__(self):
         return str(self.user)
