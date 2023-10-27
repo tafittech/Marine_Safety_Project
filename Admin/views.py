@@ -11,7 +11,8 @@ from .forms  import RegisterForm
 
 User = get_user_model()
 
-def home(request): 
+@login_required(login_url='login')
+def dashBoard(request): 
     return render(request, 'admin_dash_board.html',{})
 
 # Create your views here.
@@ -42,7 +43,7 @@ def loginUser(request):
 
 def logoutUser(request):
     logout(request)
-    return redirect('dashboard')
+    return redirect('home')
 
 def register(request):
     page = 'register'
