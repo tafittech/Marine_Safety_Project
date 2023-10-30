@@ -7,7 +7,7 @@ from django.contrib.auth.forms  import (
 )
 
 
-
+from .models import AdminProfile
 
 
 User = get_user_model()
@@ -99,3 +99,14 @@ class UserAdminChangeForm(forms.ModelForm):
 
 
 
+class adminUpdateForm(ModelForm):
+
+    class Meta:
+        model  = AdminProfile
+        fields ='__all__'
+
+    def __init__(self, *args,**kwargs):
+        super(adminUpdateForm, self).__init__(*args,*kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class':'input-group-text'})

@@ -7,7 +7,7 @@ from django.contrib.auth import (
 
 
 from .models import AdminProfile
-from .forms  import RegisterForm 
+from .forms  import RegisterForm, adminUpdateForm 
 
 User = get_user_model()
 
@@ -80,3 +80,8 @@ def userAccount(request):
     user_account = request.user.adminprofile
     return render(request, 'user-account.html', {'user':user_account})
 
+
+def editAccount(request):
+    profile  = request.user.adminprofile
+    form     = adminUpdateForm()
+    return render(request,'edit-account.html',{'edit2':form, 'user':profile})
