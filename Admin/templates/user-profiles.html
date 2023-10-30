@@ -7,10 +7,12 @@
 
 
 {% block content %}
-
         
-<section class="card-body rounded-3 " style="background-color: #cfd4d5;">
-  <div class="col">
+<section class="container-fluid align-items-center " style="background-color: #e5edef;">
+  <div class="container py-5">
+    <!--- Breadcrumb start here --->
+    <div class="row">
+      <div class="col">
         <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
           <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
@@ -19,51 +21,27 @@
           </ol>
         </nav>
       </div>
-  <div class="align-items-center py-5">
-        <div class="container py-5 h-100">
-          
-        <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col col-md-9 col-lg-7 col-xl-5">
-        <div class="card" style="border-radius: 15px;">
-          <div class="card-body p-75">
-            <div class="d-flex text-black">
-              <div class="flex-shrink-0">
-                <img src="{{ user.profile_image.url }}"
-                  alt="Generic placeholder image" class="img-fluid"
-                  style="width: 180px; border-radius: 10px;">
-              </div>
-              <div class="flex-grow-1 ms-3">
-                <h5 class="mb-1">{{user.name}}</h5>
-                <p class="mb-2 pb-1" style="color: #2b2a2a;">{{user.staff_info}}</p>
-                <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
-                  style="background-color: #efefef;">
-                  <div>
-                    <p class="small text-muted mb-1">Articles</p>
-                    <p class="mb-0">41</p>
-                  </div>
-                  <div class="px-3">
-                    <p class="small text-muted mb-1">Followers</p>
-                    <p class="mb-0">976</p>
-                  </div>
-                  <div>
-                    <p class="small text-muted mb-1">Rating</p>
-                    <p class="mb-0">8.5</p>
-                  </div>
-                </div>
-                <div class="d-flex pt-1">
-                      <button type="button" class="btn btn-outline-primary me-1 flex-grow-1">Chat</button>
-                      <button type="button"   class="btn btn-primary flex-grow-1">
-                        Follow
-                      </button>
-                      </a>     
-                </div>
-              </div>
+    </div>
+    <!---User Profile start here--->
+    <div class=" row justify-content-center"">
+      <div class="col-lg-9 ">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img src="{{user.profile_image.url}}" alt="avatar"
+              class="rounded-circle img-fluid" style="width: 150px;">
+              <a href="{% url 'user' %} ">
+              <h5 class="my-3">{{user.name}}</h5>
+              </a>
+            <p class="text-muted mb-1">{{user.staff_info}}</p>
+            <p class="text-muted mb-4">{{user.address}}</p>
+            <div class="d-flex justify-content-center mb-2">
+              <button type="button" class="btn btn-primary">Follow</button>
+              <button type="button" class="btn btn-outline-primary ms-1">Message</button>
             </div>
           </div>
-        </div>
-        </div>
-        </div>
-        </div>
+        </div> 
+      </div>
+    </div>
   </div>
 </section>
  

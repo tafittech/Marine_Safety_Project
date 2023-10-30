@@ -1,27 +1,52 @@
 {%extends 'base.html' %}
 
+<section class="container-fluid align-items-center" style=" background-color: #e5edef;">
+  
 
 {% block content %}
 
   
 
-<div class="container px-4 py-5 align-content-center" id="featured-3">
-    <h2 class="pb-2 border-bottom">Columns with icons</h2>
+<section class="container px-4 py-5 align-content-center" style="background-color: #e5edef;" id="featured-3">
+  <div class="container py-5">
+    <div class="row">
+  <!--- Breadcrumb start here --->
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'account' %}">Profile</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'staff' user.id %}">User profile</a></li>
+            <li class="breadcrumb-item active" aria-current="page">User account</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <h2 class="pb-2 border-bottom">Marine Safety Staff</h2>
   <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+    
     {% for a in account  %}
       <div class="feature col">
-    <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
-      <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"/></svg>
-    </div>
-    <h3 class="fs-2 text-body-emphasis">{{a.name}}</h3>
-    <p>{{a.staff_info}}</p>
-    <a href="{% url 'staff' user.id %}" class="btn btn-outline-primary rounded-end">
-      profile detail
-      
-    </a>
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img src="{{a.profile_image.url}}" alt="avatar"
+              class="img-thumbnail" style="width: 150px;">
+              <a href="{% url 'user'  %}">
+              <h5 class="my-3">{{a.name}}</h5>
+              </a> 
+              <p class="text-muted mb-1">{{a.staff_info}}</p>
+              <p class="text-muted mb-4">{{a.mobile}}</p>
+            <div class="d-flex justify-content-center mb-2">
+              <a href="{% url 'staff' user.id %}" type="button" class="btn btn-primary">Details View</a>
+              <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+            </div>
+          </div>
+        </div>
+   
       </div>
     {% endfor %}
   </div>
-</div>
+  </div>
+</section>
 
 {% endblock content%}
