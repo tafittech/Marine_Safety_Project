@@ -7,7 +7,7 @@
           Dashboard
         </a>
       </li>
-      {% if user.is_authenticated == user.staff %}
+      {% if user.is_authenticated == user.active %}
        <li class="nav-item">
         <a class="nav-link" href="{% url 'account' %}">
           <span data-feather="users" class="align-text-bottom"></span>

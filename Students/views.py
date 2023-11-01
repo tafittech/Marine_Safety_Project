@@ -18,7 +18,7 @@ def loginStudentUser(request):
     page = 'student-login'
 
     if request.user.is_authenticated:
-        return redirect('account') 
+        return redirect('student-user') 
 
     if request.method ==  'POST':
         email = request.POST['email']
@@ -50,13 +50,13 @@ def studentRegister(request):
     if request.method == 'POST':
         form  =  StudentRegisterForm(request.POST)
         form2 =  StaffRegisterForm(request.POST)
-        if form.is_valid() or form2.is_valid():
+        if form.is_valid():
             user = form.save(commit=False)
             user.email = user.email
             user.save()
             messages.success(request, 'Student acount was created!')
             login(request, user)
-            return redirect('edit-student')
+            return redirect('student-user')
         else:
             messages.warning(request, 'An error has occurred during registration')
     return render(request, 'student_login_register.html',{'page':page,'form':form, 'form2':form2} )

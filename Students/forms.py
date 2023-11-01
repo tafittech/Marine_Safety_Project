@@ -36,7 +36,7 @@ class StudentRegisterForm(UserCreationForm):
     class Meta:
         model  = Student
         fields =[
-            'email', 'last_name', 'first_name',
+            'email','full_name',
             'password1', 'password2',
         ]
     
@@ -74,7 +74,7 @@ class StaffRegisterForm(UserCreationForm):
     class Meta:
         model  = StaffStudent
         fields =[
-            'email', 'last_name', 'first_name',
+            'email', 'full_name',
             'password1', 'password2',
         ]
     

@@ -13,7 +13,7 @@ def createStaff(sender, instance, created,*args, **kwargs):
         profile = StudentProfile.objects.create(
             user = user,      
             email = user.email,
-            surname  = user.last_name 
+            name  = user.full_name 
         )
        
 
@@ -24,11 +24,23 @@ def createStaff(sender, instance, created,*args, **kwargs):
     if created:
         user    = instance
         profile = StudentProfile.objects.create(
-            user = user,      
+            user = user,     
             email = user.email,
-            surname  = user.last_name 
+            name  = user.full_name 
         )
        
+@receiver(post_save, sender= StudentProfile)  
+def updateProfile(sender, instance ,created, *args, **kwargs ):
+    profile = instance
+    user    = profile.user
+    if created == False:
+        user.full_name = profile.name
+        user.email = profile.email
+        user.address = profile.address
+        user.phone   =  profile.phone
+        user.mobile  =  profile.mobile
+        user.student_type = profile.student_type
+        user.save( )
 
 
 

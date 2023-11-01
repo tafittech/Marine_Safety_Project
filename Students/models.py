@@ -1,21 +1,22 @@
 from django.db import models
 from django.contrib.auth.models import (
-      AbstractUser, BaseUserManager
+      BaseUserManager
 )
-from django.db.models.query import QuerySet
+
+from Admin.models import User
 
 
 
 # Create your models here
 
-class StudentUser(AbstractUser):
+class StudentUser(User):
     class Role(models.TextChoices ):
         STUDENT   = 'STUDENT','student'
-        STAFF     = 'staff','staff'
+        STAFF     = 'STAFF','staff'
 
     base_role = Role.STUDENT
 
-    role = models.CharField(max_length=255 , choices=Role.choices, blank=True, null=True) 
+    role = models.CharField(max_length=255 , choices=Role.choices) 
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -59,13 +60,12 @@ class StudentProfile(models.Model):
 
     user              = models.OneToOneField(StudentUser,on_delete=models.CASCADE, null=True , blank=True)
     email             = models.EmailField(max_length=255, blank = True, null=True)
-    surname           = models.CharField(max_length=255, blank = True, null=True)
-    first_name        = models.CharField(max_length=255, blank = True, null=True)
-    image_photo       = models.ImageField(blank=True, null=True, default= 'default1.jpeg')
+    name              = models.CharField(max_length=255, blank = True, null=True)
+    profile_image      = models.ImageField(blank=True, null=True, default= 'default1.jpeg')
     address           = models.CharField(max_length=255, blank = True, null=True)
     occupation        = models.CharField(max_length=255, blank = True, null=True)
     gender            = models.CharField(max_length=50,choices=GENDER_TYPE, default='male')
-    date_of_birth     = models.CharField(max_length=255, blank = True, null=True)
+    date_of_birth     = models.DateField(auto_now_add=False, blank = True, null=True)
     phone             = models.CharField(max_length=255, blank = True, null=True)
     mobile            = models.CharField(max_length=255, blank = True, null=True)
     student_type      = models.CharField(max_length=50, choices=STUDENT_TYPE,default='local')   
