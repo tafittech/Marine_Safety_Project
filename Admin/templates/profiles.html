@@ -22,7 +22,7 @@
         </nav>
       </div>
     </div>
-    <h2 class="pb-2 border-bottom">Marine Safety Student</h2>
+    <h2 class="pb-2 border-bottom">Marine Safety Staff</h2>
   <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
     
     {% for a in account  %}
@@ -31,13 +31,13 @@
           <div class="card-body text-center">
             <img src="{{a.profile_image.url}}" alt="avatar"
               class="img-thumbnail" style="width: 100px;">
-              <a href="{% url 'student-user'  %}">
+              <a href="{% url 'user'  %}">
               <h5 class="my-3">{{a.name}}</h5>
               </a> 
               <p class="text-muted mb-1">{{a.staff_info}}</p>
               <p class="text-muted mb-4">{{a.address}}</p>
             <div class="d-flex justify-content-center mb-2">
-              <a href="{% url 'student' user.id %}" type="button" class="btn btn-primary">Details View</a>
+              <a href="{% url 'staff' user.id %}" type="button" class="btn btn-primary">Details View</a>
               <button type="button" class="btn btn-outline-primary ms-1">Message</button>
             </div>
           </div>

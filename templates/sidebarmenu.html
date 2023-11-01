@@ -66,6 +66,12 @@
       </li>
     </ul>
     {% elif not user.is_authenticated %}
+     <li class="nav-item">
+        <a class="nav-link" href="{% url 'student' %}">
+          <span data-feather="users" class="align-text-bottom"></span>
+          Student 
+        </a>
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="#">
           <span data-feather="bar-chart-2" class="align-text-bottom"></span>

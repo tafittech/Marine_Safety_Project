@@ -16,8 +16,8 @@
         <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
           <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'account' %}">Profile</a></li>
-            <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+            <li class="breadcrumb-item"><a href="{% url 'student-account' %}">Profile</a></li>
+            <li class="breadcrumb-item active" aria-current="page">student Profile</li>
           </ol>
         </nav>
       </div>
@@ -30,10 +30,10 @@
             <img src="{{user.profile_image.url}}" alt="avatar"
               class="rounded-circle img-fluid" style="width: 150px;">
               <a href="{% url 'user' %} ">
-              <h5 class="my-3">{{user.name}}</h5>
+              <h5 class="my-3">{{user.last_name}}</h5>
               </a>
-            <p class="text-muted mb-1">{{user.staff_info}}</p>
-            <p class="text-muted mb-4">{{user.address}}</p>
+            <p class="text-muted mb-1">{{user.student_type}}</p>
+            <p class="text-muted mb-4">{{user.nationality}}</p>
             <div class="d-flex justify-content-center mb-2">
               <button type="button" class="btn btn-primary">Follow</button>
               <button type="button" class="btn btn-outline-primary ms-1">Message</button>

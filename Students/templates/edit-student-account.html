@@ -14,9 +14,9 @@
         <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
           <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'account' %}">Profile</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'staff' user.id %}">User profile</a></li>
-            <li class="breadcrumb-item active" aria-current="page">User account</li>
+            <li class="breadcrumb-item"><a href="{% url 'student-account' %}">Profile</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'student' user.id %}">student profile</a></li>
+            <li class="breadcrumb-item active" aria-current="page">student account</li>
           </ol>
         </nav>
       </div>

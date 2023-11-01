@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import (
-    login, logout, authenticate, get_user_model
+    login, logout, authenticate, 
 )
 
 from  .models import StudentUser, StudentProfile
@@ -29,7 +29,7 @@ def loginStudentUser(request):
 
         if user is not None:
             login(request, user)
-            return redirect('account')
+            return redirect('student-account')
         else:
             messages.error(request,'Username OR password is incorrect')
 
@@ -41,7 +41,7 @@ def logoutStudentUser(request):
     return redirect('home')
 
 def studentRegister(request):
-    page = 'register'
+    page = 'student-register'
     form =  StudentRegisterForm()
     if request.method ==  'POST':
         form =  StudentRegisterForm(request.POST)
@@ -51,12 +51,12 @@ def studentRegister(request):
             user.save()
             messages.success(request, 'User acount was created!')
             login(request, user)
-            return redirect('edit')
+            return redirect('edit-student')
         else:
             messages.warning(request, 'An error has occurred during registration')
-    return render(request, 'login_register.html',{'page':page,'form':form} )
+    return render(request, 'student_login_register.html',{'page':page,'form':form} )
 
-
+@login_required(login_url='student-login')
 def studentProfile(request):
     profiles = StudentProfile.objects.all() 
     return render(request, 'student-profiles.html', {'account':profiles })
@@ -80,7 +80,7 @@ def editStudentAccount(request):
         if form.is_valid():
             form.save()
             
-            return redirect('user')
+            return redirect('student-user')
 
 
     return render(request,'edit-account.html',{'edit2':form, 'user':profile})
