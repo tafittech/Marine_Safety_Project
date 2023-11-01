@@ -7,7 +7,7 @@ from django.contrib.auth.forms  import (
 )
 
 
-from .models import StudentUser, StudentProfile
+from .models import Student, StudentProfile, StaffStudent
 
 
 
@@ -34,9 +34,9 @@ class StudentRegisterForm(UserCreationForm):
     password2 = forms.CharField(label='Password Confirmation', widget=forms.PasswordInput)
 
     class Meta:
-        model  = StudentUser
+        model  = Student
         fields =[
-            'email', 'last_name', 'first_name','student_type',
+            'email', 'last_name', 'first_name',
             'password1', 'password2',
         ]
     
@@ -61,6 +61,45 @@ class StudentRegisterForm(UserCreationForm):
         user.set_password(self.cleaned_data["password1"])
         user.active =True
         user.student=True
+        if commit:
+            user.save()
+        return user
+
+
+
+class StaffRegisterForm(UserCreationForm):
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Password Confirmation', widget=forms.PasswordInput)
+
+    class Meta:
+        model  = StaffStudent
+        fields =[
+            'email', 'last_name', 'first_name',
+            'password1', 'password2',
+        ]
+    
+    def __init__(self, *args,**kwargs):
+        super(StaffRegisterForm, self).__init__(*args,*kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class':'input-group-text'})
+            
+
+    def clean_password2(self):
+        # Check that the two password entries match
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError('Passwords dont match')
+        return password2
+
+    def save(self, commit=True):
+        # save the provided password in hashed format
+        user = super(StaffRegisterForm,self).save(commit=True )
+        user.set_password(self.cleaned_data["password1"])
+        user.active =True
+        user.student=True
+        user.staff=True
         if commit:
             user.save()
         return user

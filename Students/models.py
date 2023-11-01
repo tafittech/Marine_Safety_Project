@@ -1,51 +1,83 @@
 from django.db import models
 from django.contrib.auth.models import (
-     AbstractBaseUser, AbstractUser,BaseUserManager
+      AbstractUser, BaseUserManager
 )
+from django.db.models.query import QuerySet
 
 
 
 # Create your models here
 
 class StudentUser(AbstractUser):
-    class StudentType(models.TextChoices ):
-        FOREIGNER = 'FOREIGNER','foreigner'
-        LOCAL     = 'LOCAL','local'
+    class Role(models.TextChoices ):
+        STUDENT   = 'STUDENT','student'
+        STAFF     = 'staff','staff'
 
-    base_student_type = StudentType.LOCAL
+    base_role = Role.STUDENT
 
-    student_type = models.CharField(max_length=255 , choices= StudentType.choices) 
+    role = models.CharField(max_length=255 , choices=Role.choices, blank=True, null=True) 
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            self.student_type = self.base_student_type
+            self.role = self.base_role
             return super().save(*args, **kwargs)
+        
 
+
+class StudentManger(BaseUserManager):
+    def get_queryset(self, *args, **kwargs):
+        results = super().get_queryset(*args, **kwargs)
+        return results.filter(role=StudentUser.Role.STUDENT)
+    
+class Student(StudentUser):
+
+    base_role = StudentUser.Role.STUDENT
+
+    student = StudentManger()
+    
+    class Meta:
+        proxy = True
+
+
+class StaffStudentManger(BaseUserManager):
+    def get_queryset(self, *args, **kwargs):
+        results = super().get_queryset(*args, **kwargs)
+        return results.filter(role=StudentUser.Role.STAFF)
+    
+class StaffStudent(StudentUser):
+
+    base_role = StudentUser.Role.STAFF
+
+    staff = StaffStudentManger()
+    
+    class Meta:
+        proxy = True
 
 class StudentProfile(models.Model):
-    GENDER_TYPE ={
-        ('MALE','male'),
-        ('FEMALE','female')
-    }
-    email              = models.EmailField(max_length=255, blank = True, null=True)
-    surname            = models.CharField(max_length=255, blank = True, null=True)
-    first_name         = models.CharField(max_length=255, blank = True, null=True)
-    image_photo        = models.ImageField(blank=True, null=True, default= 'default1.jpeg')
-    address            = models.CharField(max_length=255, blank = True, null=True)
-    occupation         = models.CharField(max_length=255, blank = True, null=True)
-    gender             = models.CharField(max_length=50, blank = True, null=True, choices=GENDER_TYPE, default='male')
-    date_of_birth      = models.CharField(max_length=255, blank = True, null=True)
-    phone              = models.CharField(max_length=255, blank = True, null=True)
-    mobile             = models.CharField(max_length=255, blank = True, null=True)
-    nationality        = models.CharField(max_length=255, blank = True, null=True)
-    national_id        = models.CharField(max_length=255, blank = True, null=True)
-    birth_cert_number  = models.CharField(max_length=255, blank = True, null=True)
-    employer           = models.CharField(max_length=255, blank = True, null=True)
-    employer_phone     = models.CharField(max_length=255, blank = True, null=True)
+    GENDER_TYPE  ={('MALE','male'),('FEMALE','female')}
+    STUDENT_TYPE ={('FOREIGNER','foreigner'),('LOCAL','local')}
+
+    user              = models.OneToOneField(StudentUser,on_delete=models.CASCADE, null=True , blank=True)
+    email             = models.EmailField(max_length=255, blank = True, null=True)
+    surname           = models.CharField(max_length=255, blank = True, null=True)
+    first_name        = models.CharField(max_length=255, blank = True, null=True)
+    image_photo       = models.ImageField(blank=True, null=True, default= 'default1.jpeg')
+    address           = models.CharField(max_length=255, blank = True, null=True)
+    occupation        = models.CharField(max_length=255, blank = True, null=True)
+    gender            = models.CharField(max_length=50,choices=GENDER_TYPE, default='male')
+    date_of_birth     = models.CharField(max_length=255, blank = True, null=True)
+    phone             = models.CharField(max_length=255, blank = True, null=True)
+    mobile            = models.CharField(max_length=255, blank = True, null=True)
+    student_type      = models.CharField(max_length=50, choices=STUDENT_TYPE,default='local')   
+    nationality       = models.CharField(max_length=255, blank = True, null=True)
+    national_id       = models.CharField(max_length=255, blank = True, null=True)
+    birth_cert_number = models.CharField(max_length=255, blank = True, null=True)
+    employer          = models.CharField(max_length=255, blank = True, null=True)
+    employer_phone    = models.CharField(max_length=255, blank = True, null=True)
 
 
     def __str__(self):
-        return self.surname
+        return str(self.user)
 
 
 

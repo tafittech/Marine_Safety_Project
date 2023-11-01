@@ -4,11 +4,9 @@ from django.dispatch import receiver
 
 
 # ---app models--
-from .models import StudentProfile, StudentUser
+from .models import StudentProfile, Student, StaffStudent
 
-
-
-@receiver(post_save,sender=StudentUser)
+@receiver(post_save,sender=StaffStudent)
 def createStaff(sender, instance, created,*args, **kwargs):
     if created:
         user    = instance
@@ -17,7 +15,20 @@ def createStaff(sender, instance, created,*args, **kwargs):
             email = user.email,
             surname  = user.last_name 
         )
-        print('profile created' )
+       
+
+
+
+@receiver(post_save,sender=Student)
+def createStaff(sender, instance, created,*args, **kwargs):
+    if created:
+        user    = instance
+        profile = StudentProfile.objects.create(
+            user = user,      
+            email = user.email,
+            surname  = user.last_name 
+        )
+       
 
 
 
