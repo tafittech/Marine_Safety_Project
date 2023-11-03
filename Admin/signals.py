@@ -16,7 +16,21 @@ def createStaff(sender, instance, created,*args, **kwargs):
             email = user.email,
             name  = user.full_name 
         )
-        print('profile created' )
+        
+
+
+@receiver(post_save, sender= AdminProfile)  
+def updateProfile(sender, instance ,created, *args, **kwargs ):
+    profile = instance
+    user    = profile.user
+    if created == False:
+        user.full_name = profile.name
+        user.email = profile.email
+        user.address = profile.address
+        user.phone   =  profile.phone
+        user.mobile  =  profile.mobile
+        user.staff_info = profile.staff_info
+        user.save( )        
 
 
 @receiver(post_delete,sender=AdminProfile)

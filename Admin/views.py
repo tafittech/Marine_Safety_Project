@@ -43,7 +43,7 @@ def loginUser(request):
 
 def logoutUser(request):
     logout(request)
-    return redirect('home')
+    return redirect('dashboard')
 
 def register(request):
     page = 'register'
@@ -56,7 +56,7 @@ def register(request):
             user.save()
             messages.success(request, 'User acount was created!')
             login(request, user)
-            return redirect('account')
+            return redirect('users')
         else:
             messages.warning(request, 'An error has occurred during registration')
     return render(request, 'login_register.html',{'page':page,'form':form} )
@@ -83,5 +83,14 @@ def userAccount(request):
 
 def editAccount(request):
     profile  = request.user.adminprofile
-    form     = adminUpdateForm()
+    form     = adminUpdateForm(instance=profile)
+
+    if request.method == 'POST':
+        form = adminUpdateForm(request.POST, request.FILES ,  instance=profile)
+        if form.is_valid():
+            form.save()
+            
+            return redirect('user')
+
+
     return render(request,'edit-account.html',{'edit2':form, 'user':profile})

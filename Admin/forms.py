@@ -99,14 +99,18 @@ class UserAdminChangeForm(forms.ModelForm):
 
 
 
+
 class adminUpdateForm(ModelForm):
 
     class Meta:
         model  = AdminProfile
-        fields ='__all__'
+        fields =[
+            'name', 'profile_image','email','address','phone','mobile','staff_info','bio_info'
+        ]
+       
 
-    def __init__(self, *args,**kwargs):
-        super(adminUpdateForm, self).__init__(*args,*kwargs)
+        def __init__(self, *args,**kwargs):
+            super(adminUpdateForm, self).__init__(*args,*kwargs)
 
-        for name, field in self.fields.items():
-            field.widget.attrs.update({'class':'input-group-text'})
+            for name, field in self.fields.items():
+                field.widget.attrs.update({'class':'input-group-text'})
