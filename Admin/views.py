@@ -7,7 +7,10 @@ from django.contrib.auth import (
 
 
 from .models import AdminProfile
-from .forms  import RegisterForm, adminUpdateForm 
+from .forms  import (
+    RegisterForm, adminUpdateForm,
+    StudentRegisterForm
+) 
 
 User = get_user_model()
 
@@ -56,13 +59,27 @@ def register(request):
             user.save()
             messages.success(request, 'User acount was created!')
             login(request, user)
-            return redirect('users')
+            return redirect('user')
         else:
             messages.warning(request, 'An error has occurred during registration')
     return render(request, 'login_register.html',{'page':page,'form':form} )
 
 
-
+def studentRegister(request):
+    page = 'student-register'
+    form =  StudentRegisterForm()
+    if request.method ==  'POST':
+        form =  StudentRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.email = user.email
+            user.save()
+            messages.success(request, 'Student acount was created!')
+            login(request, user)
+            return redirect('user')
+        else:
+            messages.warning(request, 'An error has occurred during registration')
+    return render(request, 'login_register.html',{'page':page,'form2':form} )
 
 
 def profile(request):
