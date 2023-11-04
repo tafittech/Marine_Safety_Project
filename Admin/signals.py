@@ -51,8 +51,7 @@ def updateStudentProfile(sender, instance ,created, *args, **kwargs ):
         user.email = profile.email
         user.address = profile.address
         user.phone   =  profile.phone
-        user.mobile  =  profile.mobile
-        user.staff_info = profile.staff_info
+        user.mobile  =  profile.mobile 
         user.save( )           
 
 

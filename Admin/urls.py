@@ -1,10 +1,10 @@
 from django.urls import path
 
-
+from Student.views import studentRegister
 from .views import (
     dashBoard, register, loginUser,
     logoutUser, profile,staff,
-    userAccount, editAccount, studentRegister
+    userAccount, editAccount,
 )
 
 

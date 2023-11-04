@@ -21,6 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='apanel'),
     path('', coverPage, name='home' ),
     path('', include('Admin.urls')),
+    path('', include('Student.urls'))
 ]
 
 

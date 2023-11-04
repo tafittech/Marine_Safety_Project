@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+
+
+
+{% block content %}
+
+<section class="container-fluid align-items-center" style=" background-color: #e5edef;">
+  <div class="container py-5">
+    <div class="row">
+  <!--- Breadcrumb start here --->
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'student-account' %}">Profile</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'student' user.id %}">student profile</a></li>
+            <li class="breadcrumb-item active" aria-current="page">student account</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+<!----Start of profile card-->
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img src="{{user.profile_image.url}}" alt="avatar"
+              class="rounded-circle img-fluid" style="width: 150px;">
+            <h5 class="my-3">{{user.name}}</h5>
+            <p class="text-muted mb-1">{{user.address}}</p>
+            <p class="text-muted mb-4">{{user.mobile}}</p>
+            <div class="d-flex justify-content-center mb-2">
+              <a href="{% url 'edit-student' %}" type="button" class="btn btn-primary">edit</a>
+              <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+            </div>
+          </div>
+        </div>
+        <!-- -->
+      </div>
+  <!--Start of profile details-->    
+      <div class="col-lg-8">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Full Name</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{user.name}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Email</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{user.email}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Phone</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{user.phone}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Mobile</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{user.mobile}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Address</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{user.address}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+{% endblock content %}
