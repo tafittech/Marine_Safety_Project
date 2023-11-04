@@ -120,3 +120,18 @@ class AdminProfile(models.Model):
 
     def __str__(self):
         return str(self.user)
+    
+
+
+class StudentProfile(models.Model):
+    user          = models.OneToOneField(User,on_delete=models.CASCADE, null=True , blank=True)
+    name          = models.CharField(max_length=255, blank=True, null=True)
+    profile_image = models.ImageField(blank=True, null=True, default= 'default1.jpeg')
+    email         = models.EmailField(max_length=255, blank=True, null=True)
+    address       = models.CharField(max_length=255, blank=True, null=True)
+    phone         = models.CharField(max_length=255, blank=True, null=True)
+    mobile        = models.CharField(max_length=255, blank=True, null=True)
+    student       = models.BooleanField(default=True)
+
+    def __str__(self):
+        return str(self.user)
