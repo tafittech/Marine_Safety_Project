@@ -122,6 +122,8 @@ class AdminProfile(models.Model):
         return str(self.user)
     
 
+class StudentProfileManager(models.Manager):
+    pass
 
 class StudentProfile(models.Model):
     user          = models.OneToOneField(User,on_delete=models.CASCADE, null=True , blank=True)

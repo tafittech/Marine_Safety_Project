@@ -42,17 +42,7 @@ def updateProfile(sender, instance ,created, *args, **kwargs ):
         user.staff_info = profile.staff_info
         user.save( )
 
-@receiver(post_save, sender= StudentProfile)  
-def updateStudentProfile(sender, instance ,created, *args, **kwargs ):
-    profile = instance
-    user    = profile.user
-    if created == False:
-        user.full_name = profile.name
-        user.email = profile.email
-        user.address = profile.address
-        user.phone   =  profile.phone
-        user.mobile  =  profile.mobile 
-        user.save( )           
+          
 
 
 @receiver(post_delete,sender=AdminProfile)
