@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (
      AbstractBaseUser, BaseUserManager
 )
+from django.db.models.query import QuerySet
 
  
 class UserManger(BaseUserManager):
@@ -122,11 +123,7 @@ class AdminProfile(models.Model):
         return str(self.user)
     
 
-class StudentProfileManager(models.Manager):
-    
-    def student_User(self):
-        student = StudentProfile.objects.filter(student=True)
-        return student.self()
+
 
 class StudentProfile(models.Model):
     user          = models.OneToOneField(User,on_delete=models.CASCADE, null=True , blank=True)
@@ -140,5 +137,4 @@ class StudentProfile(models.Model):
 
     def __str__(self):
         return str(self.user)
-
-    student_obj = StudentProfileManager()    
+    
