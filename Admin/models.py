@@ -123,7 +123,10 @@ class AdminProfile(models.Model):
     
 
 class StudentProfileManager(models.Manager):
-    pass
+    
+    def student_User(self):
+        student = StudentProfile.objects.filter(student=True)
+        return student.self()
 
 class StudentProfile(models.Model):
     user          = models.OneToOneField(User,on_delete=models.CASCADE, null=True , blank=True)
@@ -137,3 +140,5 @@ class StudentProfile(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+    student_obj = StudentProfileManager()    
