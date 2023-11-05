@@ -6,9 +6,10 @@ from django.contrib.auth import (
 
 
 #imports for view here.
-from .forms import StudentUpdateForm
+from .forms import StudentUpdateForm, StudentRegistrationForm
 from Admin.models import StudentProfile
 from Admin.forms  import StudentRegisterForm
+from .models import StudentRegistration
 
 # Create your views here.
 def studentProfile(request):
@@ -28,6 +29,7 @@ def studentUserAccount(request):
 def editStudentAccount(request):
     profile  = request.user.studentprofile
     form     = StudentUpdateForm(instance=profile)
+    form2     = StudentRegistrationForm(instance=profile)
 
     if request.method == 'POST':
         form = StudentUpdateForm(request.POST, request.FILES ,  instance=profile)
@@ -36,7 +38,7 @@ def editStudentAccount(request):
             return redirect('student-user')
 
 
-    return render(request,'edit-student-account.html',{'edit2':form, 'user':profile})
+    return render(request,'edit-student-account.html',{'edit2':form, 'edit3':form2, 'user':profile})
 
 
 def studentRegister(request):
@@ -54,3 +56,22 @@ def studentRegister(request):
         else:
             messages.warning(request, 'An error has occurred during registration')
     return render(request, 'login_register.html',{'page':page,'form2':form} )
+
+
+def studentRegistrationAccount(request):
+    user_account = request.user.studentregistration
+    return render(request, 'student-registration.html', {'user':user_account})
+
+
+def editStudentRegister(request):
+    profile  = request.user.studentregistration
+    
+
+    if request.method == 'POST':
+        form = StudentUpdateForm(request.POST, request.FILES ,  instance=profile)
+        if form.is_valid():
+            form.save()       
+            return redirect('student-user')
+
+
+    return render(request,'edit-student-registration.html',{'edit2':form, 'user':profile})

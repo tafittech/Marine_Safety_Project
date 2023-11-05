@@ -7,6 +7,7 @@ from django.contrib.auth.forms  import (
 )
 
 from Admin.models import StudentProfile
+from .models import StudentRegistration
 
 
 
@@ -29,6 +30,17 @@ class StudentUpdateForm(ModelForm):
 
 
 
+class StudentRegistrationForm(ModelForm):
 
+    class Meta:
+        model  = StudentRegistration
+        fields = '__all__'
+        
+
+        def __init__(self, *args,**kwargs):
+            super(StudentRegistrationForm, self).__init__(*args,*kwargs)
+
+            for name, field in self.fields.items():
+                field.widget.attrs.update({'class':'input-group-text'})
 
 
