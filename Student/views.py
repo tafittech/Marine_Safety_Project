@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import (
     login,
@@ -6,7 +7,7 @@ from django.contrib.auth import (
 
 
 #imports for view here.
-from .forms import StudentUpdateForm, StudentRegistrationForm
+from .forms import StudentUpdateForm
 from Admin.models import StudentProfile
 from Admin.forms  import StudentRegisterForm
 from .models import StudentRegistration
@@ -20,7 +21,7 @@ def student(request, pk):
     student = StudentProfile.objects.get(id=pk)
     return render(request, 'student-user-profile.html', {'user':student })
 
-
+@login_required(login_url= 'login')
 def studentUserAccount(request):
     user_account = request.user.studentprofile
     return render(request, 'student-user-account.html', {'user':user_account})
@@ -29,7 +30,6 @@ def studentUserAccount(request):
 def editStudentAccount(request):
     profile  = request.user.studentprofile
     form     = StudentUpdateForm(instance=profile)
-    form2     = StudentRegistrationForm(instance=profile)
 
     if request.method == 'POST':
         form = StudentUpdateForm(request.POST, request.FILES ,  instance=profile)
@@ -38,7 +38,7 @@ def editStudentAccount(request):
             return redirect('student-user')
 
 
-    return render(request,'edit-student-account.html',{'edit2':form, 'edit3':form2, 'user':profile})
+    return render(request,'edit-student-account.html',{'edit2':form, 'user':profile})
 
 
 def studentRegister(request):
@@ -58,20 +58,7 @@ def studentRegister(request):
     return render(request, 'login_register.html',{'page':page,'form2':form} )
 
 
-def studentRegistrationAccount(request):
-    user_account = request.user.studentregistration
-    return render(request, 'student-registration.html', {'user':user_account})
+def registration(request):
+    r_form = StudentRegistration.objects.all() 
+    return render(request, 'registration.html', {'user':r_form})
 
-
-def editStudentRegister(request):
-    profile  = request.user.studentregistration
-    
-
-    if request.method == 'POST':
-        form = StudentUpdateForm(request.POST, request.FILES ,  instance=profile)
-        if form.is_valid():
-            form.save()       
-            return redirect('student-user')
-
-
-    return render(request,'edit-student-registration.html',{'edit2':form, 'user':profile})
