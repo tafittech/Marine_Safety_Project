@@ -13,6 +13,7 @@ from Admin.forms  import StudentRegisterForm
 from .models import StudentRegistration
 
 # Create your views here.
+@login_required( login_url='login')
 def studentProfile(request):
     profiles = StudentProfile.objects.all() 
     return render(request, 'student-profiles.html', {'account':profiles })

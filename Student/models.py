@@ -11,9 +11,9 @@ class StudentRegistration(models.Model):
     GENDER_TYPE  ={('MALE','male'),('FEMALE','female')}
     STUDENT_TYPE ={('FOREIGNER','foreigner'),('LOCAL','local')}
 
-    user              = models.OneToOneField(StudentProfile, on_delete=models.CASCADE, blank=True, null=True)
-    email             = models.CharField(max_length=255, blank = True, null=True)
-    name              = models.CharField(max_length=255, blank = True, null=True)
+    #user              = models.OneToOneField(StudentProfile, on_delete=models.CASCADE, blank=True, null=True)
+    first_name        = models.CharField(max_length=255, blank = True, null=True)
+    last_name         = models.CharField(max_length=255, blank = True, null=True)
     profile_image      = models.ImageField(blank=True, null=True, default= 'default1.jpeg')
     address           = models.CharField(max_length=255, blank = True, null=True)
     occupation        = models.CharField(max_length=255, blank = True, null=True)
@@ -25,6 +25,7 @@ class StudentRegistration(models.Model):
     nationality       = models.CharField(max_length=255, blank = True, null=True)
     national_id       = models.CharField(max_length=255, blank = True, null=True)
     birth_cert_number = models.CharField(max_length=255, blank = True, null=True)
+    email             = models.EmailField(max_length=255, blank = True, null=True)
     employer          = models.CharField(max_length=255, blank = True, null=True)
     employer_phone    = models.CharField(max_length=255, blank = True, null=True)
 
