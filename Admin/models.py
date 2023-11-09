@@ -119,8 +119,8 @@ class User(AbstractBaseUser):
     
 class AdminProfile(models.Model):
     user          = models.OneToOneField(User,on_delete=models.CASCADE, null=True , blank=True)
-    first_name = models.CharField(max_length=255, blank=True, null=True)
-    last_name  = models.CharField(max_length=255, blank=True, null=True)
+    first_name    = models.CharField(max_length=255, blank=True, null=True)
+    last_name     = models.CharField(max_length=255, blank=True, null=True)
     profile_image = models.ImageField(blank=True, null=True, default= 'default1.jpeg')
     email         = models.EmailField(max_length=255, blank=True, null=True)
     address       = models.CharField(max_length=255, blank=True, null=True)

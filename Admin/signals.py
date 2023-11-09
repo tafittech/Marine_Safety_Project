@@ -46,7 +46,27 @@ def updateProfile(sender, instance ,created, *args, **kwargs ):
         user.save( )
 
           
-
+@receiver(post_save, sender= StudentProfile)  
+def updateStudentProfile(sender, instance ,created, *args, **kwargs ):
+    profile = instance
+    user    = profile.user
+    if created == False:
+        user.first_name        = profile.first_name
+        user.last_name         = profile.last_name
+        user.address           = profile.address
+        user.occupation        = user.occupation 
+        user.gender            = user.gender 
+        user.date_of_birth     = user.date_of_birth 
+        user.phone             = profile.phone
+        user.mobile            = profile.mobile
+        user.student_type      = user.student_type 
+        user.nationality       = user.nationality
+        user.national_id       = user.national_id
+        user.birth_cert_number = user.birth_cert_number 
+        user.email             = user.email
+        user.employer          = user.employer 
+        user.employer_phone    = user.employer_phone 
+        user.save( )
 
 @receiver(post_delete,sender=AdminProfile)
 def deleteStaff(sender,instance,*args, **kwargs):
