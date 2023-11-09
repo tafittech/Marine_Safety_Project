@@ -11,7 +11,7 @@ class StudentRegistration(models.Model):
     GENDER_TYPE  ={('MALE','male'),('FEMALE','female')}
     STUDENT_TYPE ={('FOREIGNER','foreigner'),('LOCAL','local')}
 
-    #user              = models.OneToOneField(StudentProfile, on_delete=models.CASCADE, blank=True, null=True)
+    user              = models.ForeignKey(StudentProfile, on_delete=models. DO_NOTHING, blank=True, null=True)
     first_name        = models.CharField(max_length=255, blank = True, null=True)
     last_name         = models.CharField(max_length=255, blank = True, null=True)
     profile_image      = models.ImageField(blank=True, null=True, default= 'default1.jpeg')

@@ -34,7 +34,10 @@ class StudentRegistrationForm(ModelForm):
 
     class Meta:
         model  = StudentRegistration
-        fields = '__all__'
+        fields =[
+            'first_name','last_name', 'profile_image','address',
+            'occupation', 'gender','date_of_birth','phone','mobile','student_type','nationality', 'national_id','birth_cert_number','email','employer', 'employer_phone'
+        ]
         
 
         def __init__(self, *args,**kwargs):
