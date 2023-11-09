@@ -2,24 +2,26 @@ from django.db import models
 from django.contrib.auth.models import (
      AbstractBaseUser, BaseUserManager
 )
-from django.db.models.query import QuerySet
 
  
 class UserManger(BaseUserManager):
     def create_user(
-            self, email, full_name, password=None, is_active=True, 
+            self, email, first_name, last_name, password=None, is_active=True, 
             is_student=False, is_staff=False, is_admin=False
         ):
         if not email:
             raise ValueError("User must have an email address")
         if not password:
             raise ValueError("User must have a password")
-        if not full_name:
-            raise ValueError("User must have a Fullname")
+        if not first_name:
+            raise ValueError("User must have a Firstname")
+        if not last_name:
+            raise ValueError("User must have a Lastname")
           
         user_obj = self.model(
-            email     = self.normalize_email(email),
-            full_name = full_name
+            email      = self.normalize_email(email),
+            first_name = first_name,
+            last_name  = last_name
         )
         user_obj.set_password(password)
         user_obj.student   = is_student
@@ -29,30 +31,33 @@ class UserManger(BaseUserManager):
         user_obj.save(using=self._db)
         return user_obj
     
-    def create_studentuser(self, email, full_name, password=None):
+    def create_studentuser(self, email, first_name, last_name, password=None):
         user = self.create_user(
             email,
-            full_name,
+            first_name,
+            last_name,
             password=password,
             is_student=True
 
         )
         return user
     
-    def create_staffuser(self, email, full_name, password=None):
+    def create_staffuser(self, email, first_name,last_name, password=None):
         user = self.create_user(
             email,
-            full_name,
+            first_name,
+            last_name,
             password=password,
             is_staff=True
 
         )
         return user
     
-    def create_superuser(self, email, full_name, password=None):
+    def create_superuser(self, email, first_name,last_name, password=None):
         user = self.create_user(
             email,
-            full_name,
+            first_name,
+            last_name,
             password=password,
             is_student=True,
             is_staff  =True,
@@ -64,24 +69,28 @@ class UserManger(BaseUserManager):
  
 class User(AbstractBaseUser):
 
-    email     = models.EmailField(unique=True, max_length=255)
-    full_name = models.CharField(max_length=255, blank=True, null=True)
-    active    = models.BooleanField(default=True)# can login
-    student   = models.BooleanField(default=False)# user non staff or superuser
-    staff     = models.BooleanField(default=False)# staff user non superuser
-    admin     = models.BooleanField(default=False)#superuser
-    timestamp = models.DateTimeField(auto_now_add=True)
+    email      = models.EmailField(unique=True, max_length=255)
+    first_name = models.CharField(max_length=255, blank=True, null=True)
+    last_name  = models.CharField(max_length=255, blank=True, null=True)
+    active     = models.BooleanField(default=True)# can login
+    student    = models.BooleanField(default=False)# user non staff or superuser
+    staff      = models.BooleanField(default=False)# staff user non superuser
+    admin      = models.BooleanField(default=False)#superuser
+    timestamp  = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD  = 'email' #username
-    REQUIRED_FIELDS = ['full_name'] #python manage.py createsuperuser
+    REQUIRED_FIELDS = ['first_name','last_name'] #python manage.py createsuperuser
 
     objects = UserManger()
 
     def __str__(self):
         return self.email
     
-    def get_full_name(self):
-        return self.full_name
+    def get_first_name(self):
+        return self.first_name
+    
+    def get_last_name(self):
+        return self.last_name
     
     def get_short_name(self):
         return self.email
@@ -110,7 +119,8 @@ class User(AbstractBaseUser):
     
 class AdminProfile(models.Model):
     user          = models.OneToOneField(User,on_delete=models.CASCADE, null=True , blank=True)
-    name          = models.CharField(max_length=255, blank=True, null=True)
+    first_name = models.CharField(max_length=255, blank=True, null=True)
+    last_name  = models.CharField(max_length=255, blank=True, null=True)
     profile_image = models.ImageField(blank=True, null=True, default= 'default1.jpeg')
     email         = models.EmailField(max_length=255, blank=True, null=True)
     address       = models.CharField(max_length=255, blank=True, null=True)
@@ -126,14 +136,27 @@ class AdminProfile(models.Model):
 
 
 class StudentProfile(models.Model):
-    user          = models.OneToOneField(User,on_delete=models.CASCADE, null=True , blank=True)
-    name          = models.CharField(max_length=255, blank=True, null=True)
-    profile_image = models.ImageField(blank=True, null=True, default= 'default1.jpeg')
-    email         = models.EmailField(max_length=255, blank=True, null=True)
-    address       = models.CharField(max_length=255, blank=True, null=True)
-    phone         = models.CharField(max_length=255, blank=True, null=True)
-    mobile        = models.CharField(max_length=255, blank=True, null=True)
-    student       = models.BooleanField(default=True)
+    GENDER_TYPE  ={('MALE','male'),('FEMALE','female')}
+    STUDENT_TYPE ={('FOREIGNER','foreigner'),('LOCAL','local')}
+
+    user              = models.OneToOneField(User,on_delete=models.CASCADE,null=True,blank=True)
+    first_name        = models.CharField(max_length=255, blank=True, null=True)
+    last_name         = models.CharField(max_length=255, blank=True, null=True)
+    profile_image     = models.ImageField(blank=True, null=True,default='default1.jpeg')
+    address           = models.CharField(max_length=255, blank = True, null=True)
+    occupation        = models.CharField(max_length=255, blank = True, null=True)
+    gender            = models.CharField(max_length=50,choices=GENDER_TYPE, default='male')
+    date_of_birth     = models.DateField(auto_now_add=False, blank = True, null=True)
+    phone             = models.CharField(max_length=255, blank = True, null=True)
+    mobile            = models.CharField(max_length=255, blank = True, null=True)
+    student_type      = models.CharField(max_length=50, choices=STUDENT_TYPE,default='local')   
+    nationality       = models.CharField(max_length=255, blank = True, null=True)
+    national_id       = models.CharField(max_length=255, blank = True, null=True)
+    birth_cert_number = models.CharField(max_length=255, blank = True, null=True)
+    email             = models.EmailField(max_length=255, blank = True, null=True)
+    employer          = models.CharField(max_length=255, blank = True, null=True)
+    employer_phone    = models.CharField(max_length=255, blank = True, null=True)
+    student           = models.BooleanField(default=True)
 
     def __str__(self):
         return str(self.user)

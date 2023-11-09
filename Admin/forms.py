@@ -20,7 +20,7 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model  = User
         fields =[
-            'email', 'full_name',
+            'email','first_name','last_name',
             'password1', 'password2',
         ]
     
@@ -57,7 +57,7 @@ class StudentRegisterForm(UserCreationForm):
     class Meta:
         model  = User
         fields =[
-            'email', 'full_name',
+            'email','first_name','last_name',
             'password1', 'password2',
         ]
     
@@ -94,7 +94,7 @@ class AdminCreationForm(forms.ModelForm):
     class Meta:
         model  = User
         fields =[
-            'email', 'full_name',
+            'email','first_name','last_name',
             'password1', 'password2',
         ]
         
@@ -123,7 +123,7 @@ class UserAdminChangeForm(forms.ModelForm):
     class Meta:
         model  = User
         fields =[
-            'email','full_name',
+            'email','first_name','last_name',
             'password', 'active', 'admin',
         ]
 
@@ -141,7 +141,7 @@ class adminUpdateForm(ModelForm):
     class Meta:
         model  = AdminProfile
         fields =[
-            'name', 'profile_image','email','address','phone','mobile','staff_info','bio_info'
+            'first_name','last_name','profile_image','email','address','phone','mobile','staff_info','bio_info'
         ]
        
 

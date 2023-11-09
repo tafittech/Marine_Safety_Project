@@ -24,7 +24,7 @@ class UserAdmin(admin.ModelAdmin):
     list_filter  = ('admin','staff', 'student', 'active')
     fieldsets    =(
         (None,{'fields':('email','password',)}),
-        ('Personal Info',{'fields':('full_name',)}),
+        ('Personal Info',{'fields':('first_name', 'last_name')}),
         ('Permissions',{'fields':('admin','staff','student', 'active',)}),
     )
 
@@ -36,21 +36,21 @@ class UserAdmin(admin.ModelAdmin):
             'fields':('email', 'password1', 'password2',)}
         ),
     )
-    search_fields     =('email','full_name')
+    search_fields     =('email','first_name','last_name')
     ordering          =('email',)
     filter_horizontal =()
 
 admin.site.register(User, UserAdmin)
 
 class ProfileAdmin(admin.ModelAdmin):
-    search_fields = ['name']
+    search_fields = ['email']
     class Meta:
         model = AdminProfile
 
 admin.site.register(AdminProfile, ProfileAdmin)
 
 class StudentProfileAdmin(admin.ModelAdmin):
-    search_fields = ['name']
+    search_fields = ['email']
     class Meta:
         model = StudentProfile
         
