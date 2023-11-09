@@ -7,7 +7,7 @@ from django.contrib.auth import (
 
 
 #imports for view here.
-from Admin.models import StudentProfile
+from .models import StudentProfile
 from .forms  import StudentRegisterForm
 from .forms import StudentUpdateForm
 

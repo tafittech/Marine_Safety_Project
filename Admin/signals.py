@@ -2,7 +2,7 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
 
-from .models import AdminProfile,StudentProfile
+from .models import AdminProfile
 
 User = get_user_model()
 
