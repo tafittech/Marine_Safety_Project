@@ -85,6 +85,8 @@
   </div>
 </section>
         {% elif page == 'student-register' %}
+              <!---
+
 <section class="background-radial-gradient overflow-hidden">
   <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
     <div class="row gx-lg-5 align-items-center mb-5">
@@ -111,7 +113,10 @@
             <form method="POST" action="{% url 'student-register' %}">
               {% csrf_token %}
               <h3>Student Registration</h3>
+              ----->
+
               <!-- 2 column grid layout with text inputs for the first and last names -->
+              <!----
               <div class="row"> 
                 <div class="col">
                   {% for field in form2 %}
@@ -122,24 +127,27 @@
                   {% endfor %}
                 </div>  
               </div>
-              
+              ----->
               <!-- Checkbox -->
+              <!----
               <div class="form-check d-flex justify-content-center mb-4">
                 <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
                 <label class="form-check-label" for="form2Example33">
                   Subscribe to our newsletter
                 </label>
               </div>
-
+              ----->
               <!-- Submit button -->
+              <!----
               <div class="text-center">
                 <button type="submit" class="btn btn-primary btn-block mb-4 align-content-center">
                   Sign up
                 </button>
               </div>
               
-
+              ---->
               <!-- Register buttons -->
+              <!----
               <div class="text-center">
                 <p>Already have an account  <a href="{% url 'login' %}">Login In</a></p>- 
                 <button type="button" class="btn btn-link btn-floating mx-1">
@@ -164,7 +172,8 @@
       </div>
     </div>
   </div>
-</section>     
+</section>
+        ----->     
         {% else %}
         <!-- Section: login Block -->
 <section style=" background-color: #cdedcf;">
@@ -200,7 +209,7 @@
 
             <p class="small mb-5 pb-lg-2"><a class="text-muted" href="#!">Forgot password?</a></p>
             <p>New  Staff account? <a href="{% url 'register' %}" class="link-info">Register here</a></p>
-            <p>Don't have a Student account? <a href="{% url 'registration' %}" class="link-info">Register here</a></p>
+            <p>Don't have a Student account? <a href="{% url 'student-register' %}" class="link-info">Register here</a></p>
 
           </form>
 

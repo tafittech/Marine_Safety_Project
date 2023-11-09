@@ -37,7 +37,7 @@ def loginUser(request):
 
         if user is not None:
             login(request, user)
-            return redirect('user')
+            return redirect('account')
         else:
             messages.error(request,'Username OR password is incorrect')
 
@@ -55,11 +55,13 @@ def register(request):
         form =  RegisterForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.email = user.email
+            user.email = user.email,
+            user.first_name = user.first_name,
+            user.last_name  = user.last_name
             user.save()
             messages.success(request, 'User acount was created!')
             login(request, user)
-            return redirect('user')
+            return redirect('account')
         else:
             messages.warning(request, 'An error has occurred during registration')
     return render(request, 'login_register.html',{'page':page,'form':form} )

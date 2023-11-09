@@ -8,7 +8,7 @@ from django.contrib.auth import (
 
 #imports for view here.
 from Admin.models import StudentProfile
-from Admin.forms  import StudentRegisterForm
+from .forms  import StudentRegisterForm
 from .forms import StudentUpdateForm
 
 # Create your views here.
