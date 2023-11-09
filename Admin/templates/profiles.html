@@ -14,10 +14,8 @@
       <div class="col">
         <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
           <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'account' %}">Profile</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'staff' user.id %}">User profile</a></li>
-            <li class="breadcrumb-item active" aria-current="page">User account</li>
+            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">dashboard</a></li> 
+            <li class="breadcrumb-item active" aria-current="page">staff profiles </li>
           </ol>
         </nav>
       </div>
@@ -32,7 +30,7 @@
             <img src="{{a.profile_image.url}}" alt="avatar"
               class="img-thumbnail" style="width: 150px;">
               <a href="{% url 'user'  %}">
-              <h5 class="my-3">{{a.name}}</h5>
+              <h5 class="my-3">{{a.first_name}}{{a.last_name}}</h5>
               </a> 
               <p class="text-muted mb-1">{{a.staff_info}}</p>
               <p class="text-muted mb-4">{{a.mobile}}</p>
