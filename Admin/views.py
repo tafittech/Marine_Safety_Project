@@ -6,7 +6,7 @@ from django.contrib.auth import (
 ) 
 
 
-from .models import AdminProfile
+from .models import AdminProfile, Message
 from .forms  import (
     RegisterForm, adminUpdateForm,
     
@@ -64,7 +64,8 @@ def register(request):
             return redirect('account')
         else:
             messages.warning(request, 'An error has occurred during registration')
-    return render(request, 'login_register.html',{'page':page,'form':form} )
+        context ={'page':page,'form':form} 
+    return render(request, 'login_register.html',context)
 
 
 
@@ -95,6 +96,24 @@ def editAccount(request):
             form.save()
             
             return redirect('user')
+    context={
+        'edit2':form, 'user':profile
+    }
+
+    return render(request,'edit-account.html',context)
 
 
-    return render(request,'edit-account.html',{'edit2':form, 'user':profile})
+def inbox(request):
+    profile = request.user.adminprofile
+    messageRequest = profile.messages.all()
+    unreadCount = messageRequest.filter(is_read=False).count()
+    context ={ 
+        'messageRequest':messageRequest, 'unreadCount':unreadCount
+    }
+    return render(request, 'inbox.html', context)
+
+
+
+
+def viewMessage(request):
+    return render(request, 'message.html', {})

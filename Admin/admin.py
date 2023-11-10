@@ -4,12 +4,14 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin  import UserAdmin as BaseUserAdmin
 from .forms import UserAdminChangeForm, AdminCreationForm
+
+
+#project imports.
+User = get_user_model()
 from .models import (
-    AdminProfile
+    AdminProfile, Message
     
 )
-
-User = get_user_model()
 
 # Register your models here.
 class UserAdmin(admin.ModelAdmin):
@@ -48,3 +50,4 @@ class ProfileAdmin(admin.ModelAdmin):
         model = AdminProfile
 
 admin.site.register(AdminProfile, ProfileAdmin)
+admin.site.register(Message)
