@@ -114,6 +114,10 @@ def inbox(request):
 
 
 
-
-def viewMessage(request):
-    return render(request, 'message.html', {})
+def viewMessage(request, pk):
+    profile = request.user.adminprofile
+    message = profile.messages.get(id=pk)
+    if message.is_read == False:
+        message.is_read = True
+        message.save()
+    return render(request, 'view-inbox.html', {'message':message})
