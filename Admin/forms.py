@@ -112,5 +112,16 @@ class adminUpdateForm(ModelForm):
                 field.widget.attrs.update({'class':'input-group-text'})
 
 
-class Message_Form(forms.ModelForm):
-    pass
+class Message_Form(ModelForm):
+    class Meta:
+        model = Message
+        fields= [
+            'name', 'email', 
+            'subject', 'body',
+        ]
+    
+    def __init__(self, *args,**kwargs):
+            super(Message_Form, self).__init__(*args,*kwargs)
+
+            for name, field in self.fields.items():
+                field.widget.attrs.update({'class':'input-group-text'})

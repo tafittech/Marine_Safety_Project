@@ -8,9 +8,8 @@ from django.contrib.auth import (
 
 from .models import AdminProfile
 from .forms  import (
-    RegisterForm, adminUpdateForm,
-   
-    
+   RegisterForm, adminUpdateForm,
+   Message_Form,  
 ) 
 
 User = get_user_model()
@@ -129,11 +128,12 @@ def viewMessage(request, pk):
 
 def createMessage(request, pk):
     recipient = AdminProfile.objects.get(id=pk)
+    form  = Message_Form()
     profile = request.user.adminprofile
     messageRequest = profile.messages.all()
     unreadCount = messageRequest.filter(is_read=False).count()
     context={
         'recipient':recipient,'unreadCount':unreadCount,
-        
+        'form':form,
     }
     return render(request, 'compose-message.html', context)

@@ -28,20 +28,28 @@
         <div class="card mb-4">
           <div class="card-body text-center">
             <img src="{{a.profile_image.url}}" alt="avatar"
-              class="img-thumbnail" style="width: 150px;">
+              class="img-thumbnail rounded-pill" style="width: 120px;">
               <a href="{% url 'user'  %}">
-              <h5 class="my-3">{{a.first_name}}{{a.last_name}}</h5>
-              </a> 
-              <p class="text-muted mb-1">{{a.staff_info}}</p>
-              <p class="text-muted mb-4">{{a.mobile}}</p>
-            <div class="d-flex justify-content-center mb-2">
-              
-              <a href="{% url 'staff' user.id %}" type="button" class="btn btn-primary">Details View</a>
-              <a href="{% url 'inbox' %}" class="btn btn-outline-primary ms-1">inbox</a>
+                <div class="container-fluid align-content-center">
+                <div class="row " >
+                  
+                  <div class=" col ">                  
+                    <h5 class="my-0 " style="font-weight: bold;" >{{a.first_name}}</h5>                  
+                  </div>
+                  <div class=" col ">                  
+                    <h5 class="my-0 " style="font-weight: bold;">{{a.last_name}}</h5>                  
+                  </div> 
+                </div>
+                </div>                                             
+              </a>               
+                  <p class="text-muted mb-1">{{a.staff_info}}</p>
+                  <p class="text-muted mb-4">{{a.mobile}}</p>
+            <div class="d-flex justify-content-center mb-2">              
+                  <a href="{% url 'staff' user.id %}" type="button" class="btn btn-primary">Details View</a>
+                  <a href="{% url 'inbox' %}" class="btn btn-outline-primary ms-1">inbox</a>
             </div>
           </div>
-        </div>
-   
+        </div>   
       </div>
     {% endfor %}
   </div>
