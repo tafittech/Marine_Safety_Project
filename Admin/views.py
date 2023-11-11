@@ -65,7 +65,7 @@ def register(request):
             return redirect('account')
         else:
             messages.warning(request, 'An error has occurred during registration')
-        context ={'page':page,'form':form} 
+    context ={'page':page,'form':form} 
     return render(request, 'login_register.html',context)
 
 
