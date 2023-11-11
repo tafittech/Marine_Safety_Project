@@ -4,7 +4,8 @@ from Student.views import studentRegister
 from .views import (
     dashBoard, register, loginUser,
     logoutUser, profile,staff, inbox,
-    userAccount, editAccount, viewMessage
+    userAccount, editAccount, viewMessage,
+    createMessage
 )
 
 
@@ -18,5 +19,6 @@ urlpatterns = [
     path('profile/<str:pk>/', staff , name= 'staff'),
     path('account/', userAccount , name= 'user'),
     path('inbox/', inbox, name='inbox'),
-    path('message/<str:pk>', viewMessage, name='view-message')
+    path('message/<str:pk>', viewMessage, name='view-message'),
+    path('compose-message/<str:pk>', createMessage, name= 'compose-message'),
 ]

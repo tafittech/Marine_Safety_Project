@@ -6,9 +6,10 @@ from django.contrib.auth import (
 ) 
 
 
-from .models import AdminProfile, Message
+from .models import AdminProfile
 from .forms  import (
     RegisterForm, adminUpdateForm,
+   
     
 ) 
 
@@ -102,7 +103,7 @@ def editAccount(request):
 
     return render(request,'edit-account.html',context)
 
-
+@login_required(login_url='login')
 def inbox(request):
     profile = request.user.adminprofile
     messageRequest = profile.messages.all()
@@ -115,9 +116,24 @@ def inbox(request):
 
 
 def viewMessage(request, pk):
+    page = 'inbox'
     profile = request.user.adminprofile
     message = profile.messages.get(id=pk)
+    messageRequest = profile.messages.all()
+    unreadCount = messageRequest.filter(is_read=False).count()
     if message.is_read == False:
         message.is_read = True
         message.save()
-    return render(request, 'view-inbox.html', {'message':message})
+    context ={'message':message, 'unreadCount':unreadCount}
+    return render(request, 'view-inbox.html',context )
+
+def createMessage(request, pk):
+    recipient = AdminProfile.objects.get(id=pk)
+    profile = request.user.adminprofile
+    messageRequest = profile.messages.all()
+    unreadCount = messageRequest.filter(is_read=False).count()
+    context={
+        'recipient':recipient,'unreadCount':unreadCount,
+        
+    }
+    return render(request, 'compose-message.html', context)

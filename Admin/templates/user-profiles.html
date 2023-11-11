@@ -35,8 +35,8 @@
             <p class="text-muted mb-1">{{user.staff_info}}</p>
             <p class="text-muted mb-4">{{user.address}}</p>
             <div class="d-flex justify-content-center mb-2">
-              <button type="button" class="btn btn-primary">Follow</button>
-              <a href="{% url 'inbox' %}" class="btn btn-outline-primary ms-1">Message</a>
+              <a href="{% url 'user' %}" type="button" class="btn btn-primary">Details View</a>
+              <a href="{% url 'compose-message' user.id %}" class="btn btn-outline-primary ms-1">sendMessage</a>
             </div>
           </div>
         </div> 

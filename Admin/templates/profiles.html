@@ -35,8 +35,9 @@
               <p class="text-muted mb-1">{{a.staff_info}}</p>
               <p class="text-muted mb-4">{{a.mobile}}</p>
             <div class="d-flex justify-content-center mb-2">
+              
               <a href="{% url 'staff' user.id %}" type="button" class="btn btn-primary">Details View</a>
-              <a href="{% url 'inbox' %}" class="btn btn-outline-primary ms-1">Message</a>
+              <a href="{% url 'inbox' %}" class="btn btn-outline-primary ms-1">inbox</a>
             </div>
           </div>
         </div>

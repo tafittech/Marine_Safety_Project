@@ -28,10 +28,10 @@
                                 </div>
                             </div>
                             <div class="col">  
-                                    <h3>
-                                    Unread <span class="text-danger" style="font-weight: bolder;">{{unreadCount}}</span>
-                                    </h3>
-                                </div>                                                      
+                                  <a href="{% url 'user' %}" class="btn btn-danger btn-block">back</a>
+                                  <a href="{% url 'compose-message' user.id %}"  class="btn btn-outline-danger btn-block">New Email</a>
+                                  <button type="button"  class="btn btn-danger btn-block">Unread ({{unreadCount}})</button>  
+                            </div>                                                   
                         </div>
                     </div>
                 </div>

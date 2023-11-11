@@ -7,7 +7,7 @@ from django.contrib.auth.forms  import (
 )
 
 
-from .models import AdminProfile
+from .models import AdminProfile, Message
 
 
 User = get_user_model()
@@ -110,3 +110,7 @@ class adminUpdateForm(ModelForm):
 
             for name, field in self.fields.items():
                 field.widget.attrs.update({'class':'input-group-text'})
+
+
+class Message_Form(forms.ModelForm):
+    pass
