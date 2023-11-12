@@ -1,28 +1,19 @@
 {% extends 'base.html' %}
 
- {% for form in form %} 
-					<div class="form-group">
-				    	<label for="to" class="col-sm-1 control-label">{{form.label}}</label>
-				    	<div class="col-sm-11">
-						{{form}}
-				    	</div>
-				  	</div>
-					{% endfor %}
+
 
 
 {% block content%}
-<section class="container-fluid">
+<section class="container-md ">
     <div class="row inbox">
 	  <div class="col-md-3">
 		<div class="panel panel-default">
 			<div class="panel-body inbox-menu">	
-                <a class="btn btn-outline-danger" href="{% url 'inbox' %}"> back</a>					
-				<a href="{% url 'compose-message' user.id %}" class="btn btn-danger btn-block">New Email</a>
+                <a class="btn btn-sm btn-outline-primary" href="{% url 'inbox' %}"> back</a>					
+				<a href="{% url 'compose-message' user.id %}" class="btn btn-sm btn-primary btn-block">compose</a>
                 <div class="card shadow-none mt-3">
               <div class="list-group shadow-none">
-                <a href="{% url 'inbox' %}" class="list-group-item active"><i class="fa fa-inbox mr-2"></i>Unread <b>(-{{unreadCount}})</b></a>              
-                <a href="javascript:void();" class="list-group-item"><i class="fa fa-paper-plane-o mr-2"></i>Sent Mail</a>
-                <a href="javascript:void();" class="list-group-item"><i class="fa fa-trash-o mr-2"></i>Trash <b>(320)</b></a>                
+                <a href="{% url 'inbox' %}" class="list-group-item active"><i class="fa fa-inbox mr-2"></i>Unread <b>(-{{unreadCount}})</b></a>                              
                 <a href="javascript:void();" class="list-group-item">Labels</a>
                 <a href="javascript:void();" class="list-group-item"><span class="fa fa-circle text-info float-right"></span>Staff</a>
                 <a href="javascript:void();" class="list-group-item"><span class="fa fa-circle text-warning float-right"></span>Student</a>
@@ -34,7 +25,7 @@
 		<!--start of contact panel-->		
 		<div class="panel panel-default">
 			<div class="panel-body contacts">
-				<button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#contentId" aria-expanded="false" aria-controls="contentId">
+				<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#contentId" aria-expanded="false" aria-controls="contentId">
 					+Contacts
 				</button>
 				<ul>
@@ -74,89 +65,40 @@
       <!--/.col-->	
 	  <div class="col-md-9">
 	    <!-----Start of message Area-->
-	    <div class="panel panel-default">
+	    <div class="panel panel-default mx-md-5 align-content-center">
 			<div class="panel-body message">
-				<p class="text-center">New Message</p>
-				<form method="post" class="form-horizontal" role="form">
-                    {% csrf_token %}
-					{% if request.user.is_authenticated == False%}
+			  <form method="post" class="form-horizontal" role="form">
+                    {% csrf_token %}					
 				<div class="mb-2 row">
 				    <label for="to" class="col-sm-1 control-label">{{form.name.label}}:</label>
 				    <div class="col-sm-11">
                       {{form.name}}        
 				    </div>
-			</div>
-			<div class="mb-2 row">
+			    </div>
+			    <div class="mb-2 row">
 				    <label for="to" class="col-sm-1 control-label">{{form.email.label}}:</label>
 				    <div class="col-sm-11">
                       {{form.email}}        
 				    </div>
-			</div>
-			<div class="mb-2 row">
+			    </div>
+			    <div class="mb-2 row">
 				    <label for="to" class="col-sm-1 control-label">{{form.subject.label}}:</label>
 				    <div class="col-sm-11">
                       {{form.subject}}        
 				    </div>
-			</div>
-
-					{% endif %}
-			<div class="mb-2 row">
-				    <label for="to" class="col-sm-1 control-label">{{form.name.label}}:</label>
-				    <div class="col-sm-11">
-                      {{form.name}}        
-				    </div>
-			</div>
-
-			<div class="mb-2 row">
-				    <label for="to" class="col-sm-1 control-label">{{form.subject.label}}:</label>
-				    <div class="col-sm-11">
-                      {{form.subject}}        
-				    </div>
-			</div>
-			
-			<div class="col-sm-11 col-sm-offset-1">	
-			<div class="btn-toolbar" role="toolbar">
-						
-						<div class="btn-group">
-						  	<button class="btn btn-default"><span class="fa fa-bold"></span></button>
-						  	<button class="btn btn-default"><span class="fa fa-italic"></span></button>
-							<button class="btn btn-default"><span class="fa fa-underline"></span></button>
-						</div>
-
-						<div class="btn-group">
-						  	<button class="btn btn-default"><span class="fa fa-align-left"></span></button>
-						  	<button class="btn btn-default"><span class="fa fa-align-right"></span></button>
-						  	<button class="btn btn-default"><span class="fa fa-align-center"></span></button>
-							<button class="btn btn-default"><span class="fa fa-align-justify"></span></button>
-						</div>
-
-						<button class="btn btn-default"><span class="fa fa-trash-o"></span></button>	
-						<button class="btn btn-default"><span class="fa fa-paperclip"></span></button>
-						<div class="btn-group">
-							<button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="fa fa-tags"></span> <span class="caret"></span></button>
-							<ul class="dropdown-menu">
-								<li><a href="#">add label <span class="label label-danger"> Home</span></a></li>
-								<li><a href="#">add label <span class="label label-info">Job</span></a></li>
-								<li><a href="#">add label <span class="label label-success">Clients</span></a></li>
-								<li><a href="#">add label <span class="label label-warning">News</span></a></li>
-							</ul>
-						</div>
-			</div>
-			<div class="mb-2 row">			    
-			<div class="col-lg-12">
+			    </div>											
+				<div class="col-sm-11 col-sm-offset-1">				
+					<div class="mb-2 row">			    
+				    <div class="col-lg-12">
                       {{form.body}}        
-			</div>
-			</div>						
-					<br>					
+				    </div>
+					</div>										
 					<div class="form-group">	
-						<button type="submit" class="btn btn-outline-success" data-bs-toggle="submit">Send</button>
-						<button type="submit" class="btn btn-outline-secondary">Draft</button>
-						<button type="submit" class="btn btn-outline-danger">Discard</button>
+						<button type="submit" class="btn btn-lg btn-primary" style="width: 10rem;" data-bs-toggle="submit">Send</button>
+						
 					</div>
-					</div>					                    
-				</form>
-				
-					
+				</div>					                    
+			  </form>									
 			</div>	
 	    </div>
 		<!---end of message A-->	
@@ -172,15 +114,3 @@
 
 
 
-
-
-											
-						<div class="btn-group">
-						  	<button class="btn btn-default"><span class="fa fa-indent"></span></button>
-						  	<button class="btn btn-default"><span class="fa fa-outdent"></span></button>
-						</div>
-						
-						<div class="btn-group">
-						  	<button class="btn btn-default"><span class="fa fa-list-ul"></span></button>
-						  	<button class="btn btn-default"><span class="fa fa-list-ol"></span></button>
-						</div>

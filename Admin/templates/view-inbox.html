@@ -12,13 +12,11 @@
         <div class="row">
           <!-- Left sidebar -->
           <div class="col-lg-3 col-md-4">
-            <a href="{% url 'inbox' %}" class="btn btn-danger waves-effect waves-light btn-block">Inbox</a>
-            <a href="{% url 'compose-mesage' user.id %}" class="btn btn-outline-primary waves-effect waves-light btn-block">Compose</a>
+            <a href="{% url 'inbox' %}" class="btn btn-sm btn-primary waves-effect waves-light btn-block">Inbox</a>
+            <a href="{% url 'compose-message' user.id %}" class="btn btn-sm btn-outline-primary waves-effect waves-light btn-block">Compose</a>
             <div class="card shadow-none mt-3">
               <div class="list-group shadow-none">
-                <a href="javascript:void();" class="list-group-item active"><i class="fa fa-inbox mr-2"></i>Inbox <b>{{unreadCount}}</b></a>              
-                <a href="javascript:void();" class="list-group-item"><i class="fa fa-paper-plane-o mr-2"></i>Sent Mail</a>
-                <a href="javascript:void();" class="list-group-item"><i class="fa fa-trash-o mr-2"></i>Trash <b>(320)</b></a>                
+                <a href="javascript:void();" class="list-group-item active"><i class="fa fa-inbox mr-2"></i>Inbox <b>{{unreadCount}}</b></a>                             
                 <a href="javascript:void();" class="list-group-item">Labels</a>
                 <a href="javascript:void();" class="list-group-item"><span class="fa fa-circle text-info float-right"></span>Staff</a>
                 <a href="javascript:void();" class="list-group-item"><span class="fa fa-circle text-warning float-right"></span>Student</a>
@@ -29,8 +27,9 @@
           <!-- End Left sidebar -->                    
         <!-- Right Sidebar -->
         <div class="col-lg-9 col-md-8">
-          <div class="row">
+          <div class="row">            
             <div class="col-lg-8">
+              <!---
               <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group mr-1">
                             <button type="button" class="btn btn-outline-primary waves-effect waves-light"><i class="fa fa-inbox"></i></button>
@@ -77,7 +76,8 @@
                             </div>
                 </div>
               </div>
-            </div>
+              ---->
+            </div>            
             <div class="col-lg-4">
               <div class="position-relative has-icon-right">
                 <input type="text" class="form-control" placeholder="search mail">
@@ -104,6 +104,7 @@
                 <p><strong>Regards</strong>,<br>{{message.name}}</p>
                 <hr>                                                     
             </div>
+           
           </div> 
           <!-- card -->
         </div> 

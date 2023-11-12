@@ -28,9 +28,9 @@
                                 </div>
                             </div>
                             <div class="col">  
-                                  <a href="{% url 'user' %}" class="btn btn-danger btn-block">back</a>
-                                  <a href="{% url 'compose-message' user.id %}"  class="btn btn-outline-danger btn-block">New Email</a>
-                                  <button type="button"  class="btn btn-danger btn-block">Unread ({{unreadCount}})</button>  
+                                  <a href="{% url 'user' %}" class="btn btn-primary btn-sm btn-block">back</a>
+                                  <a href="{% url 'compose-message' user.id %}"  class="btn btn-sm btn-outline-primary btn-block">Compose</a>
+                                  <button type="button"  class="btn btn-primary btn-sm btn-block">Unread ({{unreadCount}})</button>  
                             </div>                                                   
                         </div>
                     </div>
