@@ -151,7 +151,7 @@ def createMessage(request, pk):
             message.save()
 
             message.success(request, 'Your message was successfully sent!')
-            return redirect('account', pk=recipient.id)
+            return redirect('staff', pk=recipient.id)
         
     context={
         'recipient':recipient,'unreadCount':unreadCount,
