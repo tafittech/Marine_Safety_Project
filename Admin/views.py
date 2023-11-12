@@ -132,6 +132,27 @@ def createMessage(request, pk):
     profile = request.user.adminprofile
     messageRequest = profile.messages.all()
     unreadCount = messageRequest.filter(is_read=False).count()
+    
+    try:
+        sender = request.user.adminprofile
+    except:
+        sender = None
+
+    if request.method == 'POST':
+        form = Message_Form(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = sender
+            message.recipient = recipient
+
+            if sender:
+                message.name  = sender.name
+                message.email = sender.email
+            message.save()
+
+            message.success(request, 'Your message was successfully sent!')
+            return redirect('account', pk=recipient.id)
+        
     context={
         'recipient':recipient,'unreadCount':unreadCount,
         'form':form,
