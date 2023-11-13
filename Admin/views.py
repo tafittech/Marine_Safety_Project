@@ -116,14 +116,19 @@ def inbox(request):
 
 def viewMessage(request, pk):
     page = 'inbox'
+    form  = Message_Form()
     profile = request.user.adminprofile
     message = profile.messages.get(id=pk)
     messageRequest = profile.messages.all()
     unreadCount = messageRequest.filter(is_read=False).count()
+    
     if message.is_read == False:
         message.is_read = True
         message.save()
-    context ={'message':message, 'unreadCount':unreadCount}
+    context ={
+        'message':message, 'unreadCount':unreadCount,
+        'form':form, 
+    }
     return render(request, 'view-inbox.html',context )
 
 def createMessage(request, pk):
@@ -146,15 +151,51 @@ def createMessage(request, pk):
             message.recipient = recipient
 
             if sender:
-                message.name  = sender.name
+                message.name  = sender.first_name + " " + sender.last_name
                 message.email = sender.email
             message.save()
-
-            message.success(request, 'Your message was successfully sent!')
-            return redirect('staff', pk=recipient.id)
+            
+            messages.success(request, 'Your message was successfully sent!')
+            return redirect('inbox')
+        
         
     context={
         'recipient':recipient,'unreadCount':unreadCount,
-        'form':form,
+        'form':form, 
+    }
+    return render(request, 'compose-message.html', context)
+
+
+def updateMessage(request, pk):
+    recipient = AdminProfile.objects.get(id=pk)
+    form  = Message_Form(instance=recipient)
+    profile = request.user.adminprofile
+    messageRequest = profile.messages.all()
+    unreadCount = messageRequest.filter(is_read=False).count()
+    
+    try:
+        sender = request.user.adminprofile
+    except:
+        sender = None
+
+    if request.method == 'POST':
+        form = Message_Form(request.POST, instance=recipient)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = sender
+            message.recipient = recipient
+
+            if sender:
+                message.name  = sender.first_name + " " + sender.last_name
+                message.email = sender.email
+            message.save()
+            
+            messages.success(request, 'Your message was successfully sent!')
+            return redirect('inbox')
+        
+        
+    context={
+        'recipient':recipient,'unreadCount':unreadCount,
+        'form':form, 
     }
     return render(request, 'compose-message.html', context)
