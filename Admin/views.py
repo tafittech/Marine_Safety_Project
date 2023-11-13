@@ -201,13 +201,12 @@ def updateMessage(request, pk):
     return render(request, 'edit-view-message.html', context)
 
 def deleteMessage(request, pk):
-    message = Message.objects.get(id=pk)
-    inboxView = viewMessage()
+    profile = request.user.adminprofile
+    message = profile.messages.get(id=pk)
 
-    if inboxView == message:
-         
-         redirect('delete-message')
-
-    
+ 
+    if request.method == 'POST':
+        message.delete()
+        return redirect('inbox')
 
     return render(request, 'view-inbox.html',{'message':message} )

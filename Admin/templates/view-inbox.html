@@ -14,14 +14,7 @@
           <div class="col-lg-3 col-md-4">
             <a href="{% url 'inbox' %}" class="btn btn-sm btn-primary waves-effect waves-light btn-block">Inbox</a>
             <a href="{% url 'compose-message' user.id %}" class="btn btn-sm btn-outline-primary waves-effect waves-light btn-block">Compose</a>
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Delete
-            </button>
-            <!-- End of Modal trigger button -->
-            <!-- Modal -->
-            {% include 'snippets/delete-view-inbox.html' %}
-            <!--- End of Modal --->
+            <a href="{% url 'delete-message' user.id %}" class="btn btn-sm btn-primary waves-effect waves-light btn-block">delete</a>
             <div class="card shadow-none mt-3">
               <div class="list-group shadow-none">
                 <a href="javascript:void();" class="list-group-item active"><i class="fa fa-inbox mr-2"></i>Inbox <b>{{unreadCount}}</b></a>                             
@@ -127,3 +120,17 @@
 </section>
 
 {% endblock content%}
+
+
+
+
+
+
+<!-- Button trigger modal -->
+            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Delete
+            </button>
+            <!-- End of Modal trigger button -->
+            <!-- Modal -->
+            {% include 'snippets/delete-view-inbox.html' %}
+            <!--- End of Modal --->
