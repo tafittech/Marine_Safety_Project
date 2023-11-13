@@ -146,12 +146,12 @@ def createMessage(request, pk):
             message.recipient = recipient
 
             if sender:
-                message.name  = sender.name
+                message.name  = sender.first_name + "  " + sender.last_name
                 message.email = sender.email
             message.save()
 
-            message.success(request, 'Your message was successfully sent!')
-            return redirect('staff', pk=recipient.id)
+            messages.success(request, 'Your message was successfully sent!')
+            return redirect('inbox')
         
     context={
         'recipient':recipient,'unreadCount':unreadCount,
@@ -161,7 +161,7 @@ def createMessage(request, pk):
 
 
 def deleteMessage(request,pk):
-   
+    
     inboxMessage = Message.objects.get(id=pk)
 
     if request.method =='POST':
