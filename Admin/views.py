@@ -160,11 +160,14 @@ def createMessage(request, pk):
     return render(request, 'compose-message.html', context)
 
 
-def deleteMessage(request,pk):
+def deleteMessage(request, pk):
     
     inboxMessage = Message.objects.get(id=pk)
+    
+
 
     if request.method =='POST':
+        
         inboxMessage.delete()
 
         return redirect('inbox')
