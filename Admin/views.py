@@ -161,15 +161,11 @@ def createMessage(request, pk):
 
 
 def deleteMessage(request,pk):
-    profile = request.user.adminprofile
-    userMessage =profile.messages.get(id=pk)
-    message = Message.objects.get(id=pk)
+   
+    inboxMessage = Message.objects.get(id=pk)
 
-    if userMessage == message:
-        inboxMessage = message
-
-        if request.method =='POST':
-            inboxMessage.delete()
+    if request.method =='POST':
+        inboxMessage.delete()
 
         return redirect('inbox')
-    return render(request, 'view-inbox.html', {'message':inboxMessage})
+    return render(request, 'delete-view-inbox.html', {'message':inboxMessage})
