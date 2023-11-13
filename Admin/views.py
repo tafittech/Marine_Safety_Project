@@ -6,7 +6,7 @@ from django.contrib.auth import (
 ) 
 
 
-from .models import AdminProfile
+from .models import AdminProfile,Message
 from .forms  import (
    RegisterForm, adminUpdateForm,
    Message_Form,  
@@ -198,4 +198,16 @@ def updateMessage(request, pk):
         'recipient':recipient,'unreadCount':unreadCount,
         'form':form, 
     }
-    return render(request, 'compose-message.html', context)
+    return render(request, 'edit-view-message.html', context)
+
+def deleteMessage(request, pk):
+    message = Message.objects.get(id=pk)
+    inboxView = viewMessage()
+
+    if inboxView == message:
+         
+         redirect('delete-message')
+
+    
+
+    return render(request, 'view-inbox.html',{'message':message} )
