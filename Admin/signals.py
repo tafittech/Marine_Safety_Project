@@ -1,6 +1,8 @@
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
+from django.conf  import settings
+from django.core.mail import send_mail
 
 from .models import AdminProfile
 
@@ -17,6 +19,12 @@ def createStaff(sender, instance, created,*args, **kwargs):
             first_name = user.first_name,
             last_name  = user.last_name 
         )
+        
+       
+
+
+
+
         
 @receiver(post_save, sender= AdminProfile)  
 def updateProfile(sender, instance ,created, *args, **kwargs ):
