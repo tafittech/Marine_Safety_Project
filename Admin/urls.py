@@ -5,7 +5,7 @@ from .views import (
     dashBoard, register, loginUser,
     logoutUser, profile,staff, inbox,
     userAccount, editAccount, viewMessage,
-    createMessage, deleteMessage
+    createMessage, deleteMessage, studentRegister
 )
 
 
@@ -13,7 +13,8 @@ urlpatterns = [
     path('', dashBoard, name= 'home'),
     path('login/', loginUser , name= 'login'),
     path('logout/', logoutUser , name= 'logout'),
-    path('register/', register , name= 'register'), 
+    path('register/', register , name= 'register'),
+    path('student-register/', studentRegister, name='student-register'), 
     path('edit-account/', editAccount , name= 'edit'),
     path('profile/', profile , name= 'account'),
     path('profile/<str:pk>/', staff , name= 'staff'),

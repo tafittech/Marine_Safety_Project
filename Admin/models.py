@@ -1,13 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import (
-     AbstractBaseUser, BaseUserManager
+     AbstractBaseUser, BaseUserManager,AbstractUser
 )
+from django.db.models.query import QuerySet
 
  
 class UserManger(BaseUserManager):
     def create_user(
-            self, email, first_name, last_name, password=None, is_active=True, 
-            is_student=False, is_staff=False, is_admin=False
+            self, email, first_name, last_name, password=None, is_active=True,
+            is_staff=False, is_admin=False
         ):
         if not email:
             raise ValueError("User must have an email address")
@@ -24,23 +25,12 @@ class UserManger(BaseUserManager):
             last_name  = last_name
         )
         user_obj.set_password(password)
-        user_obj.student   = is_student
         user_obj.staff     = is_staff  
         user_obj.admin     = is_admin  
         user_obj.active    = is_active 
         user_obj.save(using=self._db)
         return user_obj
     
-    def create_studentuser(self, email, first_name, last_name, password=None):
-        user = self.create_user(
-            email,
-            first_name,
-            last_name,
-            password=password,
-            is_student=True
-
-        )
-        return user
     
     def create_staffuser(self, email, first_name,last_name, password=None):
         user = self.create_user(
@@ -73,7 +63,6 @@ class User(AbstractBaseUser):
     first_name = models.CharField(max_length=255, blank=True, null=True)
     last_name  = models.CharField(max_length=255, blank=True, null=True)
     active     = models.BooleanField(default=True)# can login
-    student    = models.BooleanField(default=False)# user non staff or superuser
     staff      = models.BooleanField(default=False)# staff user non superuser
     admin      = models.BooleanField(default=False)#superuser
     timestamp  = models.DateTimeField(auto_now_add=True)
@@ -100,10 +89,7 @@ class User(AbstractBaseUser):
     
     def has_module_perms(self, app_label):
         return True
-    
-    @property
-    def is_student(self):
-        return self.student
+
     
     @property
     def is_staff(self):
@@ -151,3 +137,59 @@ class Message(models.Model):
     
     class Meta:
         ordering =['is_read','-created']
+
+
+
+
+class StudentManger(BaseUserManager):
+    def get_queryset(self, *args, **kwargs):
+        results= super().get_queryset(*args, **kwargs)
+        return results.filter(student=True)
+
+
+class StudentUser(User):
+    
+    student = models.BooleanField(default=True)
+
+    students = StudentManger()
+
+
+class StudentProfile(models.Model):
+    GENDER_TYPE ={
+        ('MALE','male'),
+        ('FEMALE','female')
+    }
+    user          = models.OneToOneField(StudentUser,on_delete=models.CASCADE, null=True , blank=True)
+    email              = models.EmailField(max_length=255, blank = True, null=True)
+    last_name          = models.CharField(max_length=255, blank = True, null=True)
+    first_name         = models.CharField(max_length=255, blank = True, null=True)
+    image_photo        = models.ImageField(blank=True, null=True, default= 'default1.jpeg')
+    address            = models.CharField(max_length=255, blank = True, null=True)
+    occupation         = models.CharField(max_length=255, blank = True, null=True)
+    gender             = models.CharField(max_length=50, blank = True, null=True, choices=GENDER_TYPE, default='male')
+    date_of_birth      = models.CharField(max_length=255, blank = True, null=True)
+    phone              = models.CharField(max_length=255, blank = True, null=True)
+    mobile             = models.CharField(max_length=255, blank = True, null=True)
+    nationality        = models.CharField(max_length=255, blank = True, null=True)
+    national_id        = models.CharField(max_length=255, blank = True, null=True)
+    birth_cert_number  = models.CharField(max_length=255, blank = True, null=True)
+    employer           = models.CharField(max_length=255, blank = True, null=True)
+    employer_phone     = models.CharField(max_length=255, blank = True, null=True)
+
+
+    def __str__(self):
+        return self.last_name
+
+
+
+
+class StudentEmergencyProfile(models.Model):
+
+    emergency_name =models.ForeignKey(StudentProfile, on_delete=models.DO_NOTHING, blank = True, null=True,related_name='messages')
+    relationship = models.CharField(max_length=255, blank = True, null=True)
+    emergency_address = models.CharField(max_length=255, blank = True, null=True)
+    emergency_phone   = models.CharField(max_length=255, blank = True, null=True)
+
+
+    def __str__(self):
+        return self.emergency_name

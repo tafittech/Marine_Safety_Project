@@ -9,7 +9,7 @@ from django.contrib.auth import (
 from .models import AdminProfile, Message
 from .forms  import (
    RegisterForm, adminUpdateForm,
-   Message_Form,  
+   Message_Form, StudentRegisterForm  
 ) 
 
 User = get_user_model()
@@ -46,7 +46,7 @@ def loginUser(request):
 
 def logoutUser(request):
     logout(request)
-    return redirect('dashboard')
+    return redirect('home')
 
 def register(request):
     page = 'register'
@@ -160,9 +160,6 @@ def createMessage(request, pk):
     return render(request, 'compose-message.html', context)
 
 
-
-
-
 def deleteMessage(request, pk):
     
     message = Message.objects.get(id=pk)
@@ -174,3 +171,23 @@ def deleteMessage(request, pk):
 
     context ={'message':message}
     return render(request, 'delete-message.html',context )
+
+
+
+def studentRegister(request):
+    page = 'student-register'
+    form =  StudentRegisterForm()
+    if request.method ==  'POST':
+        form =  StudentRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.email = user.email,
+            user.first_name = user.first_name,
+            user.last_name  = user.last_name, 
+            user.save()
+            messages.success(request, 'User acount was created!')
+            login(request, user)
+            return redirect('account')
+        else:
+            messages.warning(request, 'An error has occurred during registration')
+    return render(request, 'login_register.html',{'page':page,'form2':form} )

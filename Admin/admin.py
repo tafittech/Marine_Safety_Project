@@ -9,7 +9,8 @@ from .forms import UserAdminChangeForm, AdminCreationForm
 #project imports.
 User = get_user_model()
 from .models import (
-    AdminProfile, Message
+    AdminProfile, Message, StudentProfile,
+    StudentEmergencyProfile, StudentUser
     
 )
 
@@ -23,11 +24,11 @@ class UserAdmin(admin.ModelAdmin):
     #These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
     list_display =('email', 'admin')
-    list_filter  = ('admin','staff', 'student', 'active')
+    list_filter  = ('admin','staff', 'active')
     fieldsets    =(
         (None,{'fields':('email','password',)}),
         ('Personal Info',{'fields':('first_name', 'last_name')}),
-        ('Permissions',{'fields':('admin','staff','student', 'active',)}),
+        ('Permissions',{'fields':('admin','staff', 'active',)}),
     )
 
     #add_fieldsets is not a standard  ModelAdmin attribute
@@ -51,3 +52,6 @@ class ProfileAdmin(admin.ModelAdmin):
 
 admin.site.register(AdminProfile, ProfileAdmin)
 admin.site.register(Message)
+admin.site.register(StudentUser)
+admin.site.register(StudentProfile)
+admin.site.register(StudentEmergencyProfile)
