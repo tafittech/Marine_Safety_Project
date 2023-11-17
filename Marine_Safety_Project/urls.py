@@ -10,8 +10,6 @@ from django.conf.urls.static import static
 
 # --cover page view ---
 
-def coverPage(request):
-    return render(request, 'index.html',{})
 
 
 
@@ -19,9 +17,8 @@ def coverPage(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='apanel'),
-    path('', coverPage, name='home' ),
     path('', include('Admin.urls')),
-    path('', include('Student.urls'))
+    
 ]
 
 
