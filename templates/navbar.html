@@ -15,10 +15,10 @@
       <a class="nav-link px-3" href="{% url 'logout' %}">logout</a>
     </div>
   </div>
-  {% elif user.is_authenticated == student %}
+  {% elif user.is_authenticated == user.active %}
     <div class="navbar-nav">
     <div class="nav-item text-nowrap">
-      <a class="nav-link px-3" href="">Account</a>
+      <a class="nav-link px-3" href="{% url 'student-account' %}">Account</a>
     </div>
   </div> 
   <div class="navbar-nav">

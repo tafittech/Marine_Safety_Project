@@ -152,6 +152,7 @@ class StudentUser(User):
     student = models.BooleanField(default=True)
 
     students = StudentManger()
+    
 
 
 class StudentProfile(models.Model):
@@ -163,7 +164,7 @@ class StudentProfile(models.Model):
     email              = models.EmailField(max_length=255, blank = True, null=True)
     last_name          = models.CharField(max_length=255, blank = True, null=True)
     first_name         = models.CharField(max_length=255, blank = True, null=True)
-    image_photo        = models.ImageField(blank=True, null=True, default= 'default1.jpeg')
+    profile_image      = models.ImageField(blank=True, null=True, default= 'default1.jpeg')
     address            = models.CharField(max_length=255, blank = True, null=True)
     occupation         = models.CharField(max_length=255, blank = True, null=True)
     gender             = models.CharField(max_length=50, blank = True, null=True, choices=GENDER_TYPE, default='male')
@@ -178,7 +179,7 @@ class StudentProfile(models.Model):
 
 
     def __str__(self):
-        return self.last_name
+        return self.email
 
 
 

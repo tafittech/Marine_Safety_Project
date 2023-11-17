@@ -53,6 +53,40 @@
       </div>
     {% endfor %}
   </div>
+  <hr>
+    <h2 class="pb-2 border-bottom">Marine Safety Students</h2>
+  <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+    
+    {% for a in account2  %}
+      <div class="feature col">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img src="{{a.profile_image.url}}" alt="avatar"
+              class="img-thumbnail rounded-pill" style="width: 120px;">
+              <a href="{% url 'user'  %}">
+                <div class="container-fluid align-content-center">
+                <div class="row " >
+                  
+                  <div class=" col ">                  
+                    <h5 class="my-0 " style="font-weight: bold;" >{{a.first_name}}</h5>                  
+                  </div>
+                  <div class=" col ">                  
+                    <h5 class="my-0 " style="font-weight: bold;">{{a.last_name}}</h5>                  
+                  </div> 
+                </div>
+                </div>                                             
+              </a>               
+                  <p class="text-muted mb-1">{{a.staff_info}}</p>
+                  <p class="text-muted mb-4">{{a.mobile}}</p>
+            <div class="d-flex justify-content-center mb-2">              
+                  <a href="{% url 'user' %}" type="button" class="btn btn-primary">Details View</a>
+                  <a href="{% url 'inbox' %}" class="btn btn-outline-primary ms-1">inbox</a>
+            </div>
+          </div>
+        </div>   
+      </div>
+    {% endfor %}
+  </div>
   </div>
 </section>
 

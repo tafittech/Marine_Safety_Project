@@ -6,7 +6,7 @@ from django.contrib.auth import (
 ) 
 
 
-from .models import AdminProfile, Message
+from .models import AdminProfile, Message, StudentProfile
 from .forms  import (
    RegisterForm, adminUpdateForm,
    Message_Form, StudentRegisterForm  
@@ -71,8 +71,12 @@ def register(request):
 
 
 def profile(request):
-    profiles = AdminProfile.objects.all() 
-    return render(request, 'profiles.html', {'account':profiles })
+    profiles = AdminProfile.objects.all()
+    students = StudentProfile.objects.all()
+    context = {
+        'account':profiles, 'account2': students
+    } 
+    return render(request, 'profiles.html',context )
 
 
 def staff(request, pk):
@@ -83,7 +87,10 @@ def staff(request, pk):
 @login_required(login_url='login')
 def userAccount(request):
     user_account = request.user.adminprofile
-    return render(request, 'user-account.html', {'user':user_account})
+    context = {
+        'user':user_account, 
+    }
+    return render(request, 'user-account.html', context)
 
 
 def editAccount(request):
@@ -191,3 +198,12 @@ def studentRegister(request):
         else:
             messages.warning(request, 'An error has occurred during registration')
     return render(request, 'login_register.html',{'page':page,'form2':form} )
+
+@login_required(login_url='login')
+def studentAccount(request):
+    account = request.user.studentuser
+    studentAccount = account.studentprofile
+    context = {
+         'user2':studentAccount, 'user':account
+    }
+    return render(request, 'user-account.html', context)
