@@ -152,6 +152,9 @@ class StudentUser(User):
     student = models.BooleanField(default=True)
 
     students = StudentManger()
+
+    def __str__(self):
+        return self.email
     
 
 
