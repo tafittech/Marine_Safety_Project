@@ -2,15 +2,14 @@ from django.contrib import admin
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-from django.contrib.auth.admin  import UserAdmin as BaseUserAdmin
+from django.contrib.auth.admin  import UserAdmin 
 from .forms import UserAdminChangeForm, AdminCreationForm
 
 
 #project imports.
 User = get_user_model()
 from .models import (
-    AdminProfile, Message, StudentProfile,
-    StudentEmergencyProfile, StudentUser
+    AdminProfile, Message,
     
 )
 
@@ -52,6 +51,4 @@ class ProfileAdmin(admin.ModelAdmin):
 
 admin.site.register(AdminProfile, ProfileAdmin)
 admin.site.register(Message)
-admin.site.register(StudentUser)
-admin.site.register(StudentProfile)
-admin.site.register(StudentEmergencyProfile)
+

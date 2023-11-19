@@ -6,10 +6,10 @@ from django.contrib.auth import (
 ) 
 
 
-from .models import AdminProfile, Message, StudentProfile
+from .models import AdminProfile, Message
 from .forms  import (
    RegisterForm, adminUpdateForm,
-   Message_Form, StudentRegisterForm  
+   Message_Form
 ) 
 
 User = get_user_model()
@@ -71,10 +71,9 @@ def register(request):
 
 
 def profile(request):
-    profiles = AdminProfile.objects.all()
-    students = StudentProfile.objects.all()
+    profiles = AdminProfile.objects.all() 
     context = {
-        'account':profiles, 'account2': students
+        'account':profiles,
     } 
     return render(request, 'profiles.html',context )
 
@@ -178,32 +177,3 @@ def deleteMessage(request, pk):
 
     context ={'message':message}
     return render(request, 'delete-message.html',context )
-
-
-
-def studentRegister(request):
-    page = 'student-register'
-    form =  StudentRegisterForm()
-    if request.method ==  'POST':
-        form =  StudentRegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.email = user.email,
-            user.first_name = user.first_name,
-            user.last_name  = user.last_name, 
-            user.save()
-            messages.success(request, 'User acount was created!')
-            login(request, user)
-            return redirect('account')
-        else:
-            messages.warning(request, 'An error has occurred during registration')
-    return render(request, 'login_register.html',{'page':page,'form2':form} )
-
-@login_required(login_url='login')
-def studentAccount(request):
-    account = request.user.studentuser
-    studentAccount = account.studentprofile
-    context = {
-         'user2':studentAccount, 'user':account
-    }
-    return render(request, 'user-account.html', context)
