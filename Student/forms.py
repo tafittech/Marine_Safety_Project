@@ -38,7 +38,7 @@ class StudentRegisterForm(UserCreationForm):
 
     def save(self, commit=True):
         # save the provided password in hashed format
-        user = super(StudentRegisterForm,self).save(commit=True   )
+        user = super(StudentRegisterForm,self).save(commit=True )
         user.set_password(self.cleaned_data["password1"])
         user.active =True
         user.student=True

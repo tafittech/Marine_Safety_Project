@@ -69,7 +69,7 @@ def register(request):
 
 
 
-
+@login_required(login_url='login')
 def profile(request):
     profiles = AdminProfile.objects.all() 
     context = {

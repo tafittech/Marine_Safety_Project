@@ -20,10 +20,12 @@
         </nav>
       </div>
     </div>
-    <h2 class="pb-2 border-bottom">Marine Safety Staff</h2>
+    <!----Start of Students Profile ----->
+  <hr>
+    <h2 class="pb-2 border-bottom">Marine Safety Students</h2>
   <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
     
-    {% for a in account  %}
+    {% for a in account2  %}
       <div class="feature col">
         <div class="card mb-4">
           <div class="card-body text-center">
@@ -45,7 +47,7 @@
                   <p class="text-muted mb-1">{{a.staff_info}}</p>
                   <p class="text-muted mb-4">{{a.mobile}}</p>
             <div class="d-flex justify-content-center mb-2">              
-                  <a href="{% url 'user' %}" type="button" class="btn btn-primary">Details View</a>
+                  <a href="{% url 'student-account' %}" type="button" class="btn btn-primary">Details View</a>
                   <a href="{% url 'inbox' %}" class="btn btn-outline-primary ms-1">inbox</a>
             </div>
           </div>
@@ -53,15 +55,6 @@
       </div>
     {% endfor %}
   </div>
-  <!----
-    <div class="container-fluid align-content-center">
-      <hr>
-    <h2 class="pb-2 border-bottom">Marine Safety Students</h2>
-      <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-          
-      </div>
-    </div> 
-  ----->
   </div>
 </section>
 

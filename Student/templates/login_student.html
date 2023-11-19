@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+
+{% block content %} 
+
+
+        {% if page == 'student-register' %}
+<section class="background-radial-gradient overflow-hidden">
+  <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+    <div class="row gx-lg-5 align-items-center mb-5">
+      <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+        <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+          The best training offered <br />
+          <span style="color: hsl(218, 81%, 75%)">for Seafarers!</span>
+        </h1>
+        <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+          Temporibus, expedita iusto veniam atque, magni tempora mollitia
+          dolorum consequatur nulla, neque debitis eos reprehenderit quasi
+          ab ipsum nisi dolorem modi. Quos?
+        </p>
+      </div>
+
+      <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+        <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+        <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+        <div class="card bg-glass">
+          
+          <div class="card-body px-4 py-5 px-md-5">
+            <form method="POST" action="{% url 'student-register' %}">
+              {% csrf_token %}
+              <h3>Student Registration</h3>
+
+              <!-- 2 column grid layout with text inputs for the first and last names -->
+             
+              <div class="row"> 
+                <div class="col">
+                  {% for field in form2 %}
+                  <div class="form-outline">  
+                    {{field}}
+                    <label class="form-label" for="form3Example1">{{field.label}}</label>
+                  </div>
+                  {% endfor %}
+                </div>  
+              </div>          
+           
+              </div>
+            
+              <!-- Submit button -->
+              
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-block mb-4 align-content-center">
+                  Sign up
+                </button>
+              </div>
+              <!-- Registered buttons -->
+              
+              <div class="text-center">
+                <p>Already have an account  <a href="{% url 'login-student' %}">Login In</a></p>- 
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+        
+        {% else %}
+        <!-- Section: login Block -->
+<section >
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-4 text-black">
+        <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+
+          <form method="POST" action="{% url 'login-student'%}" style="width: 23rem;">
+            {% csrf_token %}
+
+            <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Log in</h3>
+
+            <div class="form-outline mb-4">
+              <label class="visually-hidden" for="inputEmail3">Email</label>
+              <div class="input-group">
+              <div class="input-group-text">Email </div>
+              <input type="text"  name="email" class="form-control" id="inputEmail3" placeholder="jandoe@gmail.com">
+              </div>
+            </div>
+
+            <div class="form-outline mb-4">
+              <label class="visually-hidden" for="inputPassword3">Password </label>
+              <div class="input-group">
+                <div class="input-group-text">Password</div>
+                <input type="password"  name="password" class="form-control" id="inputPassword3" placeholder="password123">
+              </div>
+            </div>
+
+            <div class="pt-1 mb-4">
+            <button type="submit" class="btn btn-primary" style="width: 8rem; font-size: large;">login</button>
+            </div>
+
+            <p class="small mb-5 pb-lg-2"><a class="text-muted" href="#!">Forgot password?</a></p>
+            <p>Don't have a Student account ? <a href="{% url 'student-register' %}" class="link-primary">Register here</a></p>
+
+          </form>
+
+        </div>
+
+      </div>
+      <div class="col-sm-8 px-0 d-none d-sm-block">
+        {% include 'snippets/jumbotron.html' %}
+      </div>
+    </div>
+  </div>
+</section>
+        {% endif %}
+
+{% endblock content%}

@@ -1,20 +1,17 @@
 from django.db import models
+from django.db import models
 from django.contrib.auth.models import (
-    BaseUserManager,AbstractUser
+    AbstractUser
 )
-
 # Create your models here.
-class StudentManger(BaseUserManager):
-    def get_queryset(self, *args, **kwargs):
-        results= super().get_queryset(*args, **kwargs)
-        return results.filter(student=True)
+
 
 
 class StudentUser(AbstractUser):
     
     student = models.BooleanField(default=True)
 
-    students = StudentManger()
+    
 
     def __str__(self):
         return self.email
