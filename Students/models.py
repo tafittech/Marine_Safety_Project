@@ -60,8 +60,9 @@ class StudentProfile(models.Model):
 
     user              = models.OneToOneField(StudentUser,on_delete=models.CASCADE, null=True , blank=True)
     email             = models.EmailField(max_length=255, blank = True, null=True)
-    name              = models.CharField(max_length=255, blank = True, null=True)
-    profile_image      = models.ImageField(blank=True, null=True, default= 'default1.jpeg')
+    first_name        = models.CharField(max_length=255, blank = True, null=True)
+    last_name         = models.CharField(max_length=255, blank = True, null=True)
+    profile_image     = models.ImageField(blank=True, null=True, default= 'default1.jpeg')
     address           = models.CharField(max_length=255, blank = True, null=True)
     occupation        = models.CharField(max_length=255, blank = True, null=True)
     gender            = models.CharField(max_length=50,choices=GENDER_TYPE, default='male')
