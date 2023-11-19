@@ -53,14 +53,17 @@ def register(request):
         form =  RegisterForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.email = user.email
+            user.email = user.email,
+            user.first_name = user.first_name,
+            user.last_name  = user.last_name
             user.save()
             messages.success(request, 'User acount was created!')
             login(request, user)
-            return redirect('edit')
+            return redirect('account')
         else:
             messages.warning(request, 'An error has occurred during registration')
-    return render(request, 'login_register.html',{'page':page,'form':form} )
+    context ={'page':page,'form':form} 
+    return render(request, 'login_register.html',context)
 
 
 

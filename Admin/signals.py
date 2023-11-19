@@ -14,26 +14,24 @@ def createStaff(sender, instance, created,*args, **kwargs):
         profile = AdminProfile.objects.create(
             user = user,      
             email = user.email,
-            name  = user.full_name 
+            first_name = user.first_name,
+            last_name  = user.last_name 
         )
-        print('profile created' )
-
-
-
+        
 @receiver(post_save, sender= AdminProfile)  
 def updateProfile(sender, instance ,created, *args, **kwargs ):
     profile = instance
     user    = profile.user
     if created == False:
-        user.full_name = profile.name
+        user.first_name = profile.first_name
+        user.last_name = profile.last_name
         user.email = profile.email
         user.address = profile.address
         user.phone   =  profile.phone
         user.mobile  =  profile.mobile
         user.staff_info = profile.staff_info
-        user.save( )
-
-
+        user.save()
+         
 
 @receiver(post_delete,sender=AdminProfile)
 def deleteStaff(sender,instance,*args, **kwargs):
