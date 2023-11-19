@@ -12,9 +12,9 @@ urlpatterns = [
     path('dashboard/', dashBoard, name= 'dashboard'),
     path('login/', loginUser , name= 'login'),
     path('logout/', logoutUser , name= 'logout'),
-    path('register/', register , name= 'register'),
-    path('edit-account/', editAccount , name= 'edit'),
+    path('register/', register , name= 'register'),    
     path('profile/', profile , name= 'account'),
     path('profile/<str:pk>/', staff , name= 'staff'),
     path('account/', userAccount , name= 'user'),
+    path('edit-account/', editAccount , name= 'edit'),
 ]
