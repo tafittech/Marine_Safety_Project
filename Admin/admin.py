@@ -4,12 +4,14 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin  import UserAdmin as BaseUserAdmin
 from .forms import UserAdminChangeForm, AdminCreationForm
+
+
+#project imports.
+User = get_user_model()
 from .models import (
-    AdminProfile
+    AdminProfile, Message
     
 )
-
-User = get_user_model()
 
 # Register your models here.
 class UserAdmin(admin.ModelAdmin):
@@ -21,11 +23,11 @@ class UserAdmin(admin.ModelAdmin):
     #These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
     list_display =('email', 'admin')
-    list_filter  = ('admin','staff', 'student', 'active')
+    list_filter  = ('admin','staff', 'active')
     fieldsets    =(
         (None,{'fields':('email','password',)}),
-        ('Personal Info',{'fields':('full_name',)}),
-        ('Permissions',{'fields':('admin','staff','student', 'active',)}),
+        ('Personal Info',{'fields':('first_name', 'last_name')}),
+        ('Permissions',{'fields':('admin','staff', 'active',)}),
     )
 
     #add_fieldsets is not a standard  ModelAdmin attribute
@@ -36,17 +38,16 @@ class UserAdmin(admin.ModelAdmin):
             'fields':('email', 'password1', 'password2',)}
         ),
     )
-    search_fields     =('email','full_name')
+    search_fields     =('email','first_name','last_name')
     ordering          =('email',)
     filter_horizontal =()
 
 admin.site.register(User, UserAdmin)
 
 class ProfileAdmin(admin.ModelAdmin):
-    search_fields = ['name']
+    search_fields = ['email']
     class Meta:
         model = AdminProfile
 
 admin.site.register(AdminProfile, ProfileAdmin)
-
-
+admin.site.register(Message)

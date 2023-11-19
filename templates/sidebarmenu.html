@@ -2,22 +2,22 @@
   <div class="position-sticky pt-3 sidebar-sticky">
     <ul class="nav flex-column">
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="{% url 'dashboard'%}">
+        <a class="nav-link active" aria-current="page" href="{% url 'home'%}">
           <span data-feather="home" class="align-text-bottom"></span>
           Dashboard
         </a>
       </li>
-      {% if user.is_authenticated == user.active %}
+      {% if user.is_authenticated == user.staff %}
        <li class="nav-item">
         <a class="nav-link" href="{% url 'account' %}">
           <span data-feather="users" class="align-text-bottom"></span>
-          Staff 
+          Staff Account
         </a>
       </li>
        <li class="nav-item">
-        <a class="nav-link" href="{% url 'student' %}">
+        <a class="nav-link" href="#">
           <span data-feather="users" class="align-text-bottom"></span>
-          Student 
+          Student Account
         </a>
       </li>
       <li class="nav-item">
@@ -65,13 +65,26 @@
         </a>
       </li>
     </ul>
-    {% elif not user.is_authenticated %}
-     <li class="nav-item">
-        <a class="nav-link" href="{% url 'student' %}">
+    {% elif user.is_authenticated == user.student %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'student-account' %}">
           <span data-feather="users" class="align-text-bottom"></span>
-          Student 
+          Student Account
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span data-feather="file" class="align-text-bottom"></span>
+          Exams 
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span data-feather="bar-chart-2" class="align-text-bottom"></span>
+          Reports
+        </a>
+      </li> 
+    {% else%}
       <li class="nav-item">
         <a class="nav-link" href="#">
           <span data-feather="bar-chart-2" class="align-text-bottom"></span>

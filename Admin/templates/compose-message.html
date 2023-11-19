@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+
+
+{% block content%}
+<section class="container-fluid overflow-hidden align-bottom">
+    <div class="row inbox">
+	  <div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-body inbox-menu">	
+                <a class="btn btn-outline-primary btn-sm" href="{% url 'inbox' %}" style="width: 6rem;" > back</a>					
+				<a href="{% url 'compose-message' user.id %}" class="btn btn-primary btn-sm btn-block">New Email</a>
+                <div class="card shadow-none mt-3">
+              <div class="list-group shadow-none">
+                <a href="{% url 'inbox' %}" class="list-group-item active"><i class="fa fa-inbox mr-2"></i>Unread <b>(-{{unreadCount}})</b></a>                            
+                <a href="javascript:void();" class="list-group-item">Labels</a>
+                <a href="javascript:void();" class="list-group-item"><span class="fa fa-circle text-info float-right"></span>Staff</a>
+                <a href="javascript:void();" class="list-group-item"><span class="fa fa-circle text-warning float-right"></span>Student</a>
+                <a href="javascript:void();" class="list-group-item"><span class="fa fa-circle text-primary float-right"></span>Pending Approval</a>                
+              </div>
+                </div> 
+			</div>	
+		</div>
+		<!--start of contact panel-->		
+		<div class="panel panel-default">
+			<div class="panel-body contacts">
+				<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#contentId" aria-expanded="false" aria-controls="contentId">
+					+Contacts
+				</button>
+				<ul>
+				<div class="collapse" id="contentId">
+					<ul class=" list-group">
+						<li class="list-group-item">
+						<div class="btn-group">
+						<button type="button" class="btn btn-info">+Staff</button>
+          				<button class="btn btn-outline-info dropdown-toggle dropdown-toggle-split"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						<span class="visually-hidden">Toggle Dropdown</span>
+                  		</button>
+                  		<ul class="dropdown-menu bg-light">
+                  		<li class=" dropdown-item">Action</li>
+                  		</ul>
+				    	</div>
+						</li>
+						<li class="list-group-item">
+						<div class="btn-group">
+						<button type="button" class="btn btn-warning">+Student</button>
+          				<button class="btn btn-outline-warning dropdown-toggle dropdown-toggle-split"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						<span class="visually-hidden">Toggle Dropdown</span>
+                  		</button>
+                  		<ul class="dropdown-menu bg-light">
+                  		<li class=" dropdown-item">Action</li>
+                  		</ul>
+				    	</div>
+						</li>
+					</ul>					
+				</div>
+				</ul>
+				
+			</div>
+		
+		</div>
+		<!---end of contact panel-->					
+	  </div>
+      <!--/.col-->	
+	  <div class="col-md-9">
+	    <!-----Start of message Area-->
+	    <div class="panel panel-default">
+			<div class="panel-body message">
+				<p style="font-size: x-large; font-weight: 500; font-family: Arial, Helvetica, sans-serif;" >Message Center</p>
+				<form method="post" class="form-horizontal" role="form">
+                    {% csrf_token %}
+					
+				<div class="mb-2 row">
+				    <label for="to" class="col-sm-1 control-label">{{form.name.label}}:</label>
+				    <div class="col-sm-11">
+                      {{form.name}}        
+				    </div><p></p>
+			</div>
+			
+			<div class="mb-2 row">
+				    <label for="to" class="col-sm-1 control-label">{{form.subject.label}}:</label>
+				    <div class="col-sm-11">
+                      {{form.subject}}        
+					</div>					
+			</div>
+			
+			<div class="col-sm-11 col-sm-offset-1">	
+			<p>
+				<br>
+			</p>
+			<div class="mb-2 row">			    
+			<div class="col-lg-12" ">
+                      {{form.body}}        
+			</div>
+			</div>						
+					<br>					
+					<div class="form-group">	
+						<button type="submit" class="btn btn-lg btn-outline-primary" data-bs-toggle="submit" style="width: 22rem;">Send</button>
+					</div>
+					</div>					                    
+				</form>
+				
+					
+			</div>	
+	    </div>
+		<!---end of message A-->	
+	  </div>
+      <!--/.col-->		
+ 	</div>   
+</section>
+{% endblock content%}					

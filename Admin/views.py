@@ -6,8 +6,8 @@ from django.contrib.auth import (
 ) 
 
 
-from .models import AdminProfile
-from .forms  import RegisterForm, adminUpdateForm 
+from .models import AdminProfile, Message
+from .forms  import RegisterForm, adminUpdateForm, Message_Form 
 
 User = get_user_model()
 
@@ -16,6 +16,7 @@ def dashBoard(request):
     return render(request, 'admin_dash_board.html',{})
 
 # Create your views here.
+
 def loginUser(request):
     page = 'login'
 
@@ -63,8 +64,6 @@ def register(request):
 
 
 
-
-
 def profile(request):
     profiles = AdminProfile.objects.all() 
     return render(request, 'profiles.html', {'account':profiles })
@@ -94,3 +93,95 @@ def editAccount(request):
 
 
     return render(request,'edit-account.html',{'edit2':form, 'user':profile})
+
+
+#---Message Center View Start here.
+
+@login_required(login_url='login')
+def inbox(request):
+    profile = request.user.adminprofile
+    messageRequest = profile.messages.all()
+    unreadCount = messageRequest.filter(is_read=False).count()
+    context ={ 
+        'messageRequest':messageRequest, 'unreadCount':unreadCount
+    }
+    return render(request, 'inbox.html', context)
+
+
+def viewMessage(request, pk):
+    page = 'inbox'
+    profile = request.user.adminprofile
+    message = profile.messages.get(id=pk)
+    messageRequest = profile.messages.all()
+    unreadCount = messageRequest.filter(is_read=False).count()
+    if message.is_read == False:
+        message.is_read = True
+        message.save()
+    context ={'message':message, 'unreadCount':unreadCount}
+    return render(request, 'view-inbox.html',context )
+
+def createMessage(request, pk):
+    recipient = AdminProfile.objects.get(id=pk)
+    form  = Message_Form()
+    profile = request.user.adminprofile
+    messageRequest = profile.messages.all()
+    unreadCount = messageRequest.filter(is_read=False).count()
+    
+    try:
+        sender = request.user.adminprofile
+    except:
+        sender = None
+
+    if request.method == 'POST':
+        form = Message_Form(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = sender
+            message.recipient = recipient
+
+            if sender:
+                message.name  = sender.first_name + " " + sender.last_name
+                message.email = sender.email
+            message.save()
+
+            messages.success(request, 'Your message was successfully sent!')
+            return redirect('staff', pk=recipient.id)
+        
+    context={
+        'recipient':recipient,'unreadCount':unreadCount,
+        'form':form,
+    }
+    return render(request, 'compose-message.html', context)
+
+
+def deleteMessage(request, pk):
+    
+    message = Message.objects.get(id=pk)
+    
+    if request.method == 'POST':
+        message.delete()
+        redirect('inbox')
+
+    context ={'message':message}
+    return render(request, 'delete-message.html',context )
+
+
+#--- Student Views created here.
+
+def studentRegister(request):
+    page = 'student-register'
+    #form =  StudentRegisterForm()
+    #if request.method ==  'POST':
+        #form =  StudentRegisterForm(request.POST)
+        #if form.is_valid():
+        #    user = form.save(commit=False)
+        #    user.email = user.email,
+        #    user.first_name = user.first_name,
+        #    user.last_name  = user.last_name, 
+        #    user.save()
+        #    messages.success(request, 'User acount was created!')
+        #    login(request, user)
+        #    return redirect('account')
+        #else:
+        #    messages.warning(request, 'An error has occurred during registration')
+    return render(request, 'login_register.html',{'page':page} )

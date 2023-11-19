@@ -7,7 +7,7 @@ from django.contrib.auth.forms  import (
 )
 
 
-from .models import AdminProfile
+from .models import AdminProfile, Message
 
 
 User = get_user_model()
@@ -20,7 +20,7 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model  = User
         fields =[
-            'email', 'full_name',
+            'email', 'first_name', 'last_name',
             'password1', 'password2',
         ]
     
@@ -58,7 +58,7 @@ class AdminCreationForm(forms.ModelForm):
     class Meta:
         model  = User
         fields =[
-            'email', 'full_name',
+            'email', 'first_name', 'last_name',
             'password1', 'password2',
         ]
         
@@ -87,7 +87,7 @@ class UserAdminChangeForm(forms.ModelForm):
     class Meta:
         model  = User
         fields =[
-            'email','full_name',
+            'email','first_name', 'last_name',
             'password', 'active', 'admin',
         ]
 
@@ -104,14 +104,28 @@ class adminUpdateForm(ModelForm):
     class Meta:
         model  = AdminProfile
         fields =[
-            'name', 'profile_image','email','address','phone','mobile','staff_info','bio_info'
+            'first_name','last_name','profile_image','email','address','phone','mobile','staff_info','bio_info'
         ]
-        labels =[{
-            'name':'Full Name', 'profile_image':'Profile Photo','email':'Email Address','address': 'Home Address/ Location ','phone':'Phone Number','mobile':'Mobile Number','staff_info':'Position','bio_info':'About'
-        }]
 
         def __init__(self, *args,**kwargs):
             super(adminUpdateForm, self).__init__(*args,*kwargs)
 
             for name, field in self.fields.items():
                 field.widget.attrs.update({'class':'input-group-text'})
+
+
+#--- Message Form start here.
+
+class Message_Form(ModelForm):
+    class Meta:
+        model = Message
+        fields= [
+            'name', 'email', 
+            'subject', 'body',
+        ]
+    
+    def __init__(self, *args,**kwargs):
+            super(Message_Form, self).__init__(*args,*kwargs)
+
+            for name, field in self.fields.items():
+                field.widget.attrs.update({'class':'input-text'})
