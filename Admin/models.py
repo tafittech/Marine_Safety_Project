@@ -48,8 +48,7 @@ class UserManger(BaseUserManager):
             email,
             first_name,
             last_name,
-            password=password,
-            is_student=True,
+            password=password,           
             is_staff  =True,
             is_admin  =True
 
