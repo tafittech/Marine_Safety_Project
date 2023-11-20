@@ -11,24 +11,6 @@ from .models import Student, StudentProfile, StaffStudent
 
 
 
-class StudentUpdateForm(ModelForm):
-
-    class Meta:
-        model  = StudentProfile
-        fields = '__all__'
-        
-
-        def __init__(self, *args,**kwargs):
-            super(StudentUpdateForm, self).__init__(*args,*kwargs)
-
-            for name, field in self.fields.items():
-                field.widget.attrs.update({'class':'input-group-text'})
-
-
-
-
-
-
 class StudentRegisterForm(UserCreationForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password Confirmation', widget=forms.PasswordInput)
@@ -114,13 +96,19 @@ class StudentUpdateForm(ModelForm):
             'first_name','last_name', 'profile_image','address',
             'occupation', 'gender','date_of_birth','phone','mobile','student_type','nationality', 'national_id','birth_cert_number','email','employer', 'employer_phone'
         ] 
-        
+        labels ={
+            'first_name':'First Name','last_name':'Surname', 'profile_image':'Photo',
+            'address':'Address','occupation':'Occupation', 'gender':'Gender',
+            'date_of_birth':'Date of Birth','phone': 'Phone Number','mobile':'Mobile Number','student_type': 'Type of Student','nationality':'Nationality', 'national_id':'National  ID/DP/Passport ID',
+            'birth_cert_number':'Birth Certificate Number','email':'Email Address',
+            'employer':'Employer Name', 'employer_phone':'Employer Phone Number' 
+        }
 
     def __init__(self, *args,**kwargs):
         super(StudentUpdateForm, self).__init__(*args,*kwargs)
 
         for name, field in self.fields.items():
-            field.widget.attrs.update({'class':'input-group-text'})
+            field.widget.attrs.update({'class':'input-text'})
                 
 
         
