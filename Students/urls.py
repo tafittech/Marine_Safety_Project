@@ -4,21 +4,22 @@ from django.urls import path
 
 
 from .views import (
-    studentProfile, loginStudentUser, logoutStudentUser,
-    studentRegister, studentUserAccount, editStudentAccount,
-    student
+    studentProfile, loginStudent, logoutStudent,
+    studentRegister, studentAccount, editStudentAccount,
+    studentDetail
 ) 
 
 
 
 
 urlpatterns = [
+    
+    path('student-login/', loginStudent, name= 'student-login'),
+    path('student-logout/', logoutStudent , name= 'student-logout'),
     path('student/', studentProfile, name= 'student'),
-    path('student-login/', loginStudentUser, name= 'student-login'),
-    path('student-logout/', logoutStudentUser , name= 'student-logout'),
+    path('student/<str:pk>/', studentDetail , name= 'student-details'), 
     path('student-register/', studentRegister , name= 'student-register'),
-    path('student-account/', studentUserAccount , name= 'student-user'),
-    path('edit-student-account/', editStudentAccount , name= 'edit-student'),
-    path('student-profile/', studentProfile , name= 'student-account'),
-    path('student-profile/<str:pk>/', student , name= 'student'),
+    path('student-account/', studentAccount , name= 'student-account'),
+    path('edit-student-account/', editStudentAccount , name= 'edit-student-account'),
+    
 ]

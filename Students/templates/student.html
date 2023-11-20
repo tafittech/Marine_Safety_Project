@@ -1,0 +1,58 @@
+{%extends 'base.html' %}
+
+<section class="container-fluid align-items-center" style=" background-color: #e5edef;">
+  
+
+{% block content %}
+
+  
+
+<section class="container px-4 py-5 align-content-center" style="background-color: #e5edef;" id="featured-3">
+  <div class="container py-5">
+    <div class="row">
+  <!--- Breadcrumb start here --->
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">student Profile</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <h2 class="pb-2 border-bottom">Marine Safety Student</h2>
+  <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+    
+    {% for a in account  %}
+       <div class="feature col">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img src="{{a.profile_image.url}}" alt="avatar"
+              class="img-thumbnail rounded-pill" style="width: 120px;">
+              <a href="{% url 'user'  %}">
+                <div class="container-fluid align-content-center">
+                <div class="row " >                
+                  <div class=" col ">                  
+                    <h5 class="my-0 " style="font-weight: bold;" >{{a.first_name}}</h5>                  
+                  </div>
+                  <div class=" col ">                  
+                    <h5 class="my-0 " style="font-weight: bold;">{{a.last_name}}</h5>                  
+                  </div> 
+                </div>
+                </div>                                             
+              </a>               
+                  <p class="text-muted mb-1">{{a.student_type}}</p>
+                  <p class="text-muted mb-4">{{a.mobile}}</p>
+            <div class="d-flex justify-content-center mb-2">              
+                  <a href="{% url 'student-account' %}" type="button" class="btn btn-primary">Details View</a>
+                  <a href="#" class="btn btn-outline-primary ms-1">inbox</a>
+            </div>
+          </div>
+        </div>   
+      </div>
+    {% endfor %}
+  </div>
+  </div>
+</section>
+
+{% endblock content%}

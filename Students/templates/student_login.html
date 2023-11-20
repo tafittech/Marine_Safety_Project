@@ -1,60 +1,6 @@
 {% extends 'base.html' %}
-<!--Staff Student Account Registration-->
-<div class="card bg-glass">
-          <div class="card-body px-4 py-5 px-md-5">
-            <form method="POST" action="{% url 'student-register' %}">
-              {% csrf_token %}
-              
-              <!-- 2 column grid layout with text inputs for the first and last names -->
-              <div class="row"> 
-                <div class="col">
-                  {% for field in form2 %}
-                  <div class="form-outline">  
-                    {{field}}
-                    <label class="form-label" for="form3Example1">{{field.label}}</label>
-                  </div>
-                  {% endfor %}
-                </div>  
-              </div>
-              
-              <!-- Checkbox -->
-              <div class="form-check d-flex justify-content-center mb-4">
-                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
-                <label class="form-check-label" for="form2Example33">
-                  Subscribe to our newsletter
-                </label>
-              </div>
 
-              <!-- Submit button -->
-              <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-block mb-4 align-content-center">
-                  Sign up
-                </button>
-              </div>
-              
 
-              <!-- Register buttons -->
-              <div class="text-center">
-                <p>Already have an account  <a href="{% url 'student-login' %}">Login In</a></p>- 
-                <button type="button" class="btn btn-link btn-floating mx-1">
-                  <i class="fab fa-facebook-f"></i>
-                </button>
-
-                <button type="button" class="btn btn-link btn-floating mx-1">
-                  <i class="fab fa-google"></i>
-                </button>
-
-                <button type="button" class="btn btn-link btn-floating mx-1">
-                  <i class="fab fa-twitter"></i>
-                </button>
-
-                <button type="button" class="btn btn-link btn-floating mx-1">
-                  <i class="fab fa-github"></i>
-                </button>
-              </div>
-            </form>
-          </div>
-</div>
 
 {% block content %} 
         {% if page == 'student-register' %}
@@ -84,53 +30,39 @@
         <div class="card bg-glass">
           <div class="card-body px-4 py-5 px-md-5">
             <form method="POST" action="{% url 'student-register' %}">
-            {% csrf_token %}
-      
+            {% csrf_token %}      
      <!-- 2 column grid layout with text inputs for the first and last names -->
             <div class="row"> 
-        <div class="col">
-          {% for field in form %}
-          <div class="form-outline">  
-            {{field}}
-            <label class="form-label" for="form3Example1">{{field.label}}</label>
-          </div>
-          {% endfor %}
-        </div>  
-            </div>
-      
+              <div class="col">
+              {% for field in form %}
+              <div class="form-outline">  
+              {{field}}
+              <label class="form-label" for="form3Example1">
+                {{field.label}}</label>
+              </div>
+              {% endfor %}
+              </div>  
+            </div>     
         <!-- Checkbox -->
+        <!-------
             <div class="form-check d-flex justify-content-center mb-4">
-        <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
-        <label class="form-check-label" for="form2Example33">
-          Subscribe to our newsletter
-        </label>
+              <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
+              <label class="form-check-label" for="form2Example33">
+                Subscribe to our newsletter
+              </label>
             </div>
-
+        -------->
       <!-- Submit button -->
             <div class="text-center">
-        <button type="submit" class="btn btn-primary btn-block mb-4 align-content-center">
+              <button type="submit" class="btn btn-primary btn-block mb-4 align-content-center">
           Sign up
-        </button>
-            </div>
-      
+              </button>
+            </div>     
       <!-- Register buttons -->
             <div class="text-center">
-        <p>Already have an account  <a href="{% url 'student-login' %}">Login In</a></p>- 
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-facebook-f"></i>
-        </button>
-
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-google"></i>
-        </button>
-
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-twitter"></i>
-        </button>
-
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-github"></i>
-        </button>
+              <p>Already have an account  
+                <a href="{% url 'student-login' %}">Login In</a>
+              </p>- 
             </div>
             </form>
           </div>

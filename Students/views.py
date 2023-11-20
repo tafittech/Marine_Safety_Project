@@ -14,7 +14,7 @@ from .forms import(
 
 # Create your views here
 
-def loginStudentUser(request):
+def loginStudent(request):
     page = 'student-login'
 
     if request.user.is_authenticated:
@@ -32,14 +32,14 @@ def loginStudentUser(request):
 
         if user is not None:
             login(request, user)
-            return redirect('student-account')
+            return redirect('student')
         else:
             messages.error(request,'Username OR password is incorrect')
 
-    return render(request, 'student_login_register.html')
+    return render(request, 'student_login.html')
 
 
-def logoutStudentUser(request):
+def logoutStudent(request):
     logout(request)
     return redirect('home')
 
@@ -56,24 +56,40 @@ def studentRegister(request):
             user.save()
             messages.success(request, 'Student acount was created!')
             login(request, user)
-            return redirect('student-user')
+            return redirect('student-account')
         else:
             messages.warning(request, 'An error has occurred during registration')
-    return render(request, 'student_login_register.html',{'page':page,'form':form, 'form2':form2} )
+    return render(request, 'student_login.html',{'page':page,'form':form, 'form2':form2} )
+
+def staffTrainingRegister(request):
+    page  ='student-register'
+    form = StaffRegisterForm()
+    if request.method == 'POST':
+        form =  StaffRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.email = user.email
+            user.save()
+            messages.success(request, 'Student acount was created!')
+            login(request, user)
+            return redirect('student-account')
+        else:
+            messages.warning(request, 'An error has occurred during registration')
+    return render(request, 'student_login.html',{'page':page,'form':form} )
 
 @login_required(login_url='student-login')
 def studentProfile(request):
     profiles = StudentProfile.objects.all() 
-    return render(request, 'student-profiles.html', {'account':profiles })
+    return render(request, 'student.html', {'account':profiles })
 
-def student(request, pk):
-    staff = StudentProfile.objects.get(id=pk)
-    return render(request, 'student-user-profiles.html', {'user':staff })
+def studentDetail(request, pk):
+    student = StudentProfile.objects.get(id=pk)
+    return render(request, 'student-details.html', {'user':student })
 
 
-def studentUserAccount(request):
-    user_account = request.user.studentprofile
-    return render(request, 'student-user-account.html', {'user':user_account})
+def studentAccount(request):
+    studentAccount = request.user.studentprofile
+    return render(request, 'student-account.html', {'user':studentAccount})
 
 
 def editStudentAccount(request):
@@ -85,7 +101,7 @@ def editStudentAccount(request):
         if form.is_valid():
             form.save()
             
-            return redirect('student-user')
+            return redirect('student-account')
 
 
     return render(request,'edit-account.html',{'edit2':form, 'user':profile})
