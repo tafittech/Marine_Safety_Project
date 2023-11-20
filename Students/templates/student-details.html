@@ -16,7 +16,7 @@
         <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
           <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'student-account' %}">Profile</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'student' %}">Profile</a></li>
             <li class="breadcrumb-item active" aria-current="page">student Profile</li>
           </ol>
         </nav>
@@ -27,15 +27,15 @@
       <div class="col-lg-9 ">
         <div class="card mb-4">
           <div class="card-body text-center">
-            <img src="{{user.profile_photo.url}}" alt="avatar"
+            <img src="{{user.profile_image.url}}" alt="avatar"
               class="rounded-circle img-fluid" style="width: 150px;">
-              <a href="{% url 'user' %} ">
-              <h5 class="my-3">{{user.surname}}</h5><p><h5 class="my-3">{{user.first_name}}</h5></p>
+              <a href="{% url 'student-account' %} ">
+              <h5 class="my-3">{{user.last_name}}</h5><p><h5 class="my-3">{{user.first_name}}</h5></p>
               </a>
             <p class="text-muted mb-1">{{user.student_type}}</p>
             <p class="text-muted mb-4">{{user.nationality}}</p>
             <div class="d-flex justify-content-center mb-2">
-              <a href="{% url 'student-user' %}" type="button" class="btn btn-primary">account</a>
+              <a href="{% url 'student-account' %}" type="button" class="btn btn-primary">account</a>
               <button type="button" class="btn btn-outline-primary ms-1">Message</button>
             </div>
           </div>

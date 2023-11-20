@@ -18,7 +18,7 @@ def coverPage(request):
 #---urls patterns-------
 
 urlpatterns = [
-    path('admin/', admin.site.urls, name='apanel'),
+    path('admin/', admin.site.urls),
     path('', coverPage, name='home' ),
     path('', include('Admin.urls')),
     path('', include( 'Students.urls'))

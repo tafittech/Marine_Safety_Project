@@ -4,7 +4,12 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
-  {% if user.is_authenticated == user.active %}
+  {% if user.is_authenticated and user.admin %}
+   <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+      <a class="nav-link px-3" href="http://127.0.0.1:8000/admin/">Admin</a>
+    </div>
+  </div> 
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
       <a class="nav-link px-3" href="{% url 'user' %}">Account</a>
@@ -15,11 +20,11 @@
       <a class="nav-link px-3" href="{% url 'logout' %}">logout</a>
     </div>
   </div>  
-    {% elif user.is_authenticated == user.student %}
+    {% elif user.is_authenticated == user.active %}
   
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
-      <a class="nav-link px-3" href="{% url 'user' %}">Account</a>
+      <a class="nav-link px-3" href="{% url 'student-account' %}">Account</a>
     </div>
   </div> 
   <div class="navbar-nav">

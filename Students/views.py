@@ -88,23 +88,24 @@ def studentDetail(request, pk):
 
 
 def studentAccount(request):
-    studentAccount = request.user.studentprofile
+    student = request.user
+    studentAccount = student.studentprofile
     return render(request, 'student-account.html', {'user':studentAccount})
 
 
 def editStudentAccount(request):
-    profile  = request.user.studentprofile
+    student = request.user
+    profile = student.studentprofile
     form     = StudentUpdateForm(instance=profile)
 
     if request.method == 'POST':
-        form = StudentUpdateForm(request.POST, request.FILES ,  instance=profile)
+        form = StudentUpdateForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
-            form.save()
-            
+            form.save() 
             return redirect('student-account')
 
 
-    return render(request,'edit-account.html',{'edit2':form, 'user':profile})
+    return render(request,'edit-student-account.html',{'edit2':form, 'user':profile})
 
 
 
