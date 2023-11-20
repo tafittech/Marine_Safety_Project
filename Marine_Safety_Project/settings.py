@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Admin.apps.AdminConfig',
     'Students.apps.StudentsConfig',
+    'messageCenter.apps.MessagecenterConfig',
 ]
 
 MIDDLEWARE = [

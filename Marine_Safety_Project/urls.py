@@ -21,7 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', coverPage, name='home' ),
     path('', include('Admin.urls')),
-    path('', include( 'Students.urls'))
+    path('', include( 'Students.urls')),
+    path('', include('messageCenter.urls'))
 ]
 
 
