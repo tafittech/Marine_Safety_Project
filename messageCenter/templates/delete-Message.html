@@ -1,0 +1,43 @@
+{%  extends 'base.html' %}
+
+
+
+
+{%  block content %}
+<section class=" container-fluid overflow-hidden align-bottom">
+ <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+    <div class="row gx-lg-5 align-items-center mb-5">
+    <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+        <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+        <div id="radius-shape-2" class="position-absolute rounded-circle shadow-5-strong"></div>
+        <div class="card bg-glass rounded-pill" style="width: 33rem;" >
+        <div class="card-body  px-4 py-5 px-md-5">            
+            <div class="row align-content-center "></div>
+            <form method="post" >
+              {% csrf_token %}
+               <!-- Modal -->
+              <div class="modal-static" id="deleteMessageModal">
+              <div class="modal-dialog ">
+              <div class="modal-content">
+                <div class="modal-header">                 
+                </div>
+                <div class="modal-body" style="height: 4rem;">
+                  <p style="font-size: medium;">Are you sure you want to delete message <u class=" text-primary" style="font-weight: 700;">{{message.subject}}</u> ?</p>
+                </div>
+                <div class="modal-footer">
+                <a href="{% url 'admin-message' %}" class="btn btn-lg btn-outline-primary" style="width: 7rem;">Cancel</a>
+                <div class=" col-5 m-md-2"></div> 
+                <input type="submit" class="btn btn-lg btn-outline-primary" style="width: 6rem;" value="Delete"/>
+                </div>
+              </div>
+              </div>
+              </div>
+            <!---end of Modal--->
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+ </div>
+</section>
+{% endblock content %}

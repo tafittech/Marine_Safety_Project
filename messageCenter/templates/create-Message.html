@@ -8,11 +8,11 @@
 	  <div class="col-md-3">
 		<div class="panel panel-default">
 			<div class="panel-body inbox-menu">	
-                <a class="btn btn-outline-primary btn-sm" href="{% url 'message' %}" style="width: 6rem;"  >inbox</a>					
-				<a href="{% url 'send-message' user.id %}" class="btn btn-primary btn-sm btn-block">Send message</a>
+                <a class="btn btn-outline-primary btn-sm" href="{% url 'admin-message' %}" style="width: 6rem;"  >inbox</a>					
+				<a href="{% url 'admin-send' user.id %}" class="btn btn-primary btn-sm btn-block">Send message</a>
                 <div class="card shadow-none mt-3">
               <div class="list-group shadow-none">
-                <a href="{% url 'message' %}" class="list-group-item active"><i class="fa fa-inbox mr-2"></i>Unread <b>({{unreadCount}})</b></a>                            
+                <a href="{% url 'admin-message' %}" class="list-group-item active"><i class="fa fa-inbox mr-2"></i>Unread <b>({{unreadCount}})</b></a>                            
                 <a href="javascript:void();" class="list-group-item">Labels</a>
                 <a href="javascript:void();" class="list-group-item"><span class="fa fa-circle text-info float-right"></span>Staff</a>
                 <a href="javascript:void();" class="list-group-item"><span class="fa fa-circle text-warning float-right"></span>Student</a>
