@@ -7,7 +7,11 @@ from django.contrib.auth.decorators import login_required
 from Admin.models import User
 from .models import Message
 from .forms import Message_Form
+
+
 # Create your views here.
+
+
 @login_required(login_url='student-login')
 def messageCenter(request):
     messageRequest = Message.objects.all()
@@ -61,6 +65,18 @@ def createMessage(request, pk):
         'form':form,
     }
     return render(request, 'createMessage.html', context)
+
+
+def deleteMessage(request, pk):
+    
+    message = Message.objects.get(id=pk)
+    
+    if request.method == 'POST':
+        message.delete()
+        redirect('message')
+
+    context ={'message':message}
+    return render(request, 'deleteMessage.html',context )
 
 
 
