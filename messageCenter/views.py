@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 
 
 
-from Admin.models import User
+from Students.models import StudentProfile
 from .models import Message
 from .forms import Message_Form
 
@@ -14,7 +14,8 @@ from .forms import Message_Form
 
 @login_required(login_url='student-login')
 def messageCenter(request):
-    messageRequest = Message.objects.all()
+    profile = request.user.studentprofile
+    messageRequest = profile.messages.all()
     unreadCount = messageRequest.filter(is_read=False).count()
     context ={ 
         'messageRequest':messageRequest, 'unreadCount':unreadCount
@@ -23,9 +24,10 @@ def messageCenter(request):
 
 
 def viewMessage(request, pk):
-    page = 'inbox'
-    message = Message.objects.get(id=pk)
-    messageRequest = Message.objects.all()
+    page = 'message'
+    profile = request.user.studentprofile
+    message = profile.messages.get(id=pk)
+    messageRequest = profile.messages.all()
     unreadCount = messageRequest.filter(is_read=False).count()
     if message.is_read == False:
         message.is_read = True
@@ -35,13 +37,14 @@ def viewMessage(request, pk):
 
 
 def createMessage(request, pk):
-    recipient = Message.objects.get(id=pk)
+    recipient = StudentProfile.objects.get(id=pk)
     form  = Message_Form()
-    messageRequest = Message.objects.all()
+    profile = request.user.studentprofile
+    messageRequest = profile.messages.all()
     unreadCount = messageRequest.filter(is_read=False).count()
     
     try:
-        sender = Message.objects.filter(sender)
+        sender = request.user.studentprofile
     except:
         sender = None
 
@@ -53,13 +56,12 @@ def createMessage(request, pk):
             message.recipient = recipient
 
             if sender:
-                message.name  = sender.name
+                message.name  = sender.first_name + "  " + sender.last_name
                 message.email = sender.email
             message.save()
 
-            message.success(request, 'Your message was successfully sent!')
-            return redirect('staff', pk=recipient.id)
-        
+            messages.success(request, 'Your message was successfully sent!')
+            return redirect('message')
     context={
         'recipient':recipient,'unreadCount':unreadCount,
         'form':form,
@@ -68,12 +70,12 @@ def createMessage(request, pk):
 
 
 def deleteMessage(request, pk):
-    
-    message = Message.objects.filter(id=pk)
+    profile = request.user.studentprofile
+    message = profile.messages.filter(id=pk)
     
     if request.method == 'POST':
         message.delete()
-        redirect('home')
+        redirect('message')
 
     context ={'message':message}
     return render(request, 'deleteMessage.html',context )

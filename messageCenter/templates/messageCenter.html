@@ -42,9 +42,9 @@
                 <ul class="mail_list list-group list-unstyled">
                     {% for m in messageRequest%}
                     {% if m.is_read == False %}
-                    <li class="list-group-item unread">
+                    <li class="list-group-item  unread">
                     {% else %}
-                    <li class="list-group-item">
+                    <li class="list-group-item text-secondary">
                         {% endif %}
                         <div class="media">
                             <div class="pull-left">                                

@@ -1,12 +1,12 @@
 from django.db import models
 
 
-from Admin.models import User
+from Students.models import StudentProfile 
 
 # Create your models here.
 class Message(models.Model):
-    sender      =models.ForeignKey(User,on_delete=models.SET_NULL,null=True, blank=True)
-    recipient   =models.ForeignKey(User,on_delete=models.SET_NULL,null=True, blank=True,related_name='messages' )
+    sender      =models.ForeignKey(StudentProfile,on_delete=models.SET_NULL,null=True, blank=True)
+    recipient   =models.ForeignKey(StudentProfile,on_delete=models.SET_NULL,null=True, blank=True,related_name='messages' )
     name        = models.CharField(max_length=255,blank=True , null=True)
     email       = models.EmailField(max_length=255,blank=True , null=True)
     subject     = models.CharField(max_length=255,blank=True , null=True)
