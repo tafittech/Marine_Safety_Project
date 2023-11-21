@@ -69,11 +69,11 @@ def createMessage(request, pk):
 
 def deleteMessage(request, pk):
     
-    message = Message.objects.get(id=pk)
+    message = Message.objects.filter(id=pk)
     
     if request.method == 'POST':
         message.delete()
-        redirect('message')
+        redirect('home')
 
     context ={'message':message}
     return render(request, 'deleteMessage.html',context )
