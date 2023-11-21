@@ -18,6 +18,18 @@ def messageCenter(request):
     return render(request, 'messageCenter.html', context)
 
 
+def viewMessage(request, pk):
+    page = 'inbox'
+    message = Message.objects.get(id=pk)
+    messageRequest = Message.objects.all()
+    unreadCount = messageRequest.filter(is_read=False).count()
+    if message.is_read == False:
+        message.is_read = True
+        message.save()
+    context ={'message':message, 'unreadCount':unreadCount}
+    return render(request, 'viewMessage.html',context )
+
+
 
 
 
