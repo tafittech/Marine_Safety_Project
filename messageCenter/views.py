@@ -30,6 +30,39 @@ def viewMessage(request, pk):
     return render(request, 'viewMessage.html',context )
 
 
+def createMessage(request, pk):
+    recipient = Message.objects.get(id=pk)
+    form  = Message_Form()
+    messageRequest = Message.objects.all()
+    unreadCount = messageRequest.filter(is_read=False).count()
+    
+    try:
+        sender = Message.objects.filter(sender)
+    except:
+        sender = None
+
+    if request.method == 'POST':
+        form = Message_Form(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = sender
+            message.recipient = recipient
+
+            if sender:
+                message.name  = sender.name
+                message.email = sender.email
+            message.save()
+
+            message.success(request, 'Your message was successfully sent!')
+            return redirect('staff', pk=recipient.id)
+        
+    context={
+        'recipient':recipient,'unreadCount':unreadCount,
+        'form':form,
+    }
+    return render(request, 'createMessage.html', context)
+
+
 
 
 
