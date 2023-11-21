@@ -58,7 +58,7 @@ class StudentProfile(models.Model):
     GENDER_TYPE  ={('MALE','male'),('FEMALE','female')}
     STUDENT_TYPE ={('FOREIGNER','foreigner'),('LOCAL','local')}
 
-    user              = models.OneToOneField(User,on_delete=models.CASCADE, null=True , blank=True)
+    user              = models.OneToOneField(StudentUser,on_delete=models.CASCADE, null=True , blank=True)
     email             = models.EmailField(max_length=255, blank = True, null=True)
     first_name        = models.CharField(max_length=255, blank = True, null=True)
     last_name         = models.CharField(max_length=255, blank = True, null=True)

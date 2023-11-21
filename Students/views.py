@@ -88,13 +88,13 @@ def studentDetail(request, pk):
 
 
 def studentAccount(request):
-    student = request.user
-    studentAccount = student.studentprofile
+    student = request.user.studentuser
+    studentAccount= student.studentprofile
     return render(request, 'student-account.html', {'user':studentAccount})
 
 
 def editStudentAccount(request):
-    student = request.user
+    student = request.user.studentuser
     profile = student.studentprofile
     form     = StudentUpdateForm(instance=profile)
 
