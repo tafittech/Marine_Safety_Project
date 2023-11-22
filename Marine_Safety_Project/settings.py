@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'Admin.apps.AdminConfig',
     'Students.apps.StudentsConfig',
     'messageCenter.apps.MessagecenterConfig',
+    'Course.apps.CourseConfig',
 ]
 
 MIDDLEWARE = [
