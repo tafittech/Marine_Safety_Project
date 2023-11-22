@@ -17,6 +17,7 @@ class Course(models.Model):
         return self.course_name 
 
 
+
 class Subject(models.Model):
     id           = models.AutoField(primary_key=True)
     subject_name = models.CharField(max_length=255)
@@ -28,7 +29,22 @@ class Subject(models.Model):
 
     def __str__(self):
         return self.subject_name
-    
+
+
+
+class Certificate(models.Model):
+    id        = models.AutoField(primary_key=True)
+    cert_number = models.IntegerField(default=0)
+    Date_issued = models.DateTimeField(auto_now_add=True)
+    course_id   = models.ForeignKey(Course, on_delete=models.CASCADE)
+    subject_id  = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    created_at  = models.DateTimeField(auto_now_add=True)
+    updated_at  = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.Date_issued
+
+
 
 class Attendance(models.Model):
     id              = models.AutoField(primary_key=True)
@@ -40,6 +56,7 @@ class Attendance(models.Model):
     def  __str__(self):
         return self.attendance_date
     
+
 
 class AttendanceReport(models.Model):
     id            = models.AutoField(primary_key=True)
