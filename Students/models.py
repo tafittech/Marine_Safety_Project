@@ -13,7 +13,7 @@ class StudentProfile(models.Model):
     GENDER_TYPE  ={('MALE','male'),('FEMALE','female')}
     STUDENT_TYPE ={('FOREIGNER','foreigner'),('LOCAL','local')}
 
-    user              = models.OneToOneField(User,on_delete=models.CASCADE, null=True , blank=True)
+    user              = models.OneToOneField(User,on_delete=models.CASCADE)
     email             = models.EmailField(max_length=255, blank = True, null=True)
     first_name        = models.CharField(max_length=255, blank = True, null=True)
     last_name         = models.CharField(max_length=255, blank = True, null=True)
@@ -30,6 +30,8 @@ class StudentProfile(models.Model):
     birth_cert_number = models.CharField(max_length=255, blank = True, null=True)
     employer          = models.CharField(max_length=255, blank = True, null=True)
     employer_phone    = models.CharField(max_length=255, blank = True, null=True)
+    created_at        = models.DateTimeField(auto_now_add=True)
+    updated_at        = models.DateTimeField(auto_now_add=True)
 
 
     def __str__(self):
@@ -38,10 +40,12 @@ class StudentProfile(models.Model):
 
 class StudentEmergencyProfile(models.Model):
 
-    emergency_name =models.ForeignKey(StudentProfile, on_delete=models.DO_NOTHING, blank = True, null=True)
-    relationship = models.CharField(max_length=255, blank = True, null=True)
+    emergency_name    =models.ForeignKey(StudentProfile, on_delete=models.DO_NOTHING, blank = True, null=True)
+    relationship      = models.CharField(max_length=255, blank = True, null=True)
     emergency_address = models.CharField(max_length=255, blank = True, null=True)
     emergency_phone   = models.CharField(max_length=255, blank = True, null=True)
+    created_at        = models.DateTimeField(auto_now_add=True)
+    updated_at        = models.DateTimeField(auto_now_add=True)
 
 
     def __str__(self):
