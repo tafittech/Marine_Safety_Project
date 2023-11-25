@@ -4,32 +4,22 @@ from django.dispatch import receiver
 
 
 # ---app models--
-from .models import StudentProfile, Student, StaffStudent
+from .models import StudentProfile
+from Admin.models import User
 
-@receiver(post_save,sender=StaffStudent)
+@receiver(post_save,sender=User)
 def createStaff(sender, instance, created,*args, **kwargs):
     if created:
-        user    = instance
-        profile = StudentProfile.objects.create(
-            user = user,      
-            email = user.email,
-            first_name = user.first_name,
-            last_name  = user.last_name 
+        if instance.user_type == 2:
+            user    = instance
+            profile = StudentProfile.objects.create(
+                user = user,      
+                email = user.email,
+                first_name = user.first_name,
+                last_name  = user.last_name 
         )
        
 
-
-
-@receiver(post_save,sender=Student)
-def createStaff(sender, instance, created,*args, **kwargs):
-    if created:
-        user    = instance
-        profile = StudentProfile.objects.create(
-            user = user,     
-            email = user.email,
-            first_name = user.first_name,
-            last_name  = user.last_name 
-        )
        
 @receiver(post_save, sender= StudentProfile)  
 def updateProfile(sender, instance ,created, *args, **kwargs ):

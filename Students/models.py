@@ -9,56 +9,11 @@ from Admin.models import User
 
 # Create your models here
 
-class StudentUser(User):
-    class Role(models.TextChoices ):
-        STUDENT   = 'STUDENT','student'
-        STAFF     = 'STAFF','staff'
-
-    base_role = Role.STUDENT
-
-    role = models.CharField(max_length=255 , choices=Role.choices) 
-
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.role = self.base_role
-            return super().save(*args, **kwargs)
-        
-
-
-class StudentManger(BaseUserManager):
-    def get_queryset(self, *args, **kwargs):
-        results = super().get_queryset(*args, **kwargs)
-        return results.filter(role=StudentUser.Role.STUDENT)
-    
-class Student(StudentUser):
-
-    base_role = StudentUser.Role.STUDENT
-
-    student = StudentManger()
-    
-    class Meta:
-        proxy = True
-
-
-class StaffStudentManger(BaseUserManager):
-    def get_queryset(self, *args, **kwargs):
-        results = super().get_queryset(*args, **kwargs)
-        return results.filter(role=StudentUser.Role.STAFF)
-    
-class StaffStudent(StudentUser):
-
-    base_role = StudentUser.Role.STAFF
-
-    staff = StaffStudentManger()
-    
-    class Meta:
-        proxy = True
-
 class StudentProfile(models.Model):
     GENDER_TYPE  ={('MALE','male'),('FEMALE','female')}
     STUDENT_TYPE ={('FOREIGNER','foreigner'),('LOCAL','local')}
 
-    user              = models.OneToOneField(StudentUser,on_delete=models.CASCADE, null=True , blank=True)
+    user              = models.OneToOneField(User,on_delete=models.CASCADE, null=True , blank=True)
     email             = models.EmailField(max_length=255, blank = True, null=True)
     first_name        = models.CharField(max_length=255, blank = True, null=True)
     last_name         = models.CharField(max_length=255, blank = True, null=True)
