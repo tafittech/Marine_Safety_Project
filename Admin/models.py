@@ -6,8 +6,7 @@ from django.contrib.auth.models import (
  
 class UserManger(BaseUserManager):
     def create_user(
-            self, email, full_name, password=None, is_active=True, 
-            is_student=False, is_staff=False, is_admin=False
+            self, email, full_name, password=None, is_active=True, is_staff=False, is_admin=False
         ):
         if not email:
             raise ValueError("User must have an email address")
@@ -21,22 +20,12 @@ class UserManger(BaseUserManager):
             full_name = full_name
         )
         user_obj.set_password(password)
-        user_obj.student   = is_student
         user_obj.staff     = is_staff  
         user_obj.admin     = is_admin  
         user_obj.active    = is_active 
         user_obj.save(using=self._db)
         return user_obj
     
-    def create_studentuser(self, email, full_name, password=None):
-        user = self.create_user(
-            email,
-            full_name,
-            password=password,
-            is_student=True
-
-        )
-        return user
     
     def create_staffuser(self, email, full_name, password=None):
         user = self.create_user(
@@ -53,7 +42,6 @@ class UserManger(BaseUserManager):
             email,
             full_name,
             password=password,
-            is_student=True,
             is_staff  =True,
             is_admin  =True
 
@@ -62,11 +50,14 @@ class UserManger(BaseUserManager):
 
  
 class User(AbstractBaseUser):
+    USER_TYPE = (
+        (1,'admin'), (2,'student'),(3,'staff')
+    )
 
     email     = models.EmailField(unique=True, max_length=255)
     full_name = models.CharField(max_length=255, blank=True, null=True)
-    active    = models.BooleanField(default=True)# can login
-    student   = models.BooleanField(default=False)# user non staff or superuser
+    user_type = models.CharField(default=1, choices=USER_TYPE, max_length=20)
+    active    = models.BooleanField(default=True)# can login  
     staff     = models.BooleanField(default=False)# staff user non superuser
     admin     = models.BooleanField(default=False)#superuser
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -91,9 +82,6 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
     
-    @property
-    def is_student(self):
-        return self.student
     
     @property
     def is_staff(self):
