@@ -5,37 +5,23 @@ from django.contrib.auth.decorators import login_required
 
 
 from Students.models import StudentProfile
-from Admin.models import AdminProfile
+from Admin.models import User
 
 from .forms import Message_Form, AdminMessageForm
 
 
 # Create your views here.
-
-
+# Student message views here.
 @login_required(login_url='student-login')
 def messageCenter(request):
     profile = request.user.studentprofile
-    profile1 = request.user.studentprofile
-    messageRequest = profile.messages.all()
-    messageRequest1 = profile1.messages.all()
-    unreadCount = messageRequest.filter(is_read=False).count()
-    unreadCount1 = messageRequest1.filter(is_read=False).count()
-    context ={ 
-        'messageRequest':messageRequest, 'unreadCount':unreadCount,
-        'messageRequest1':messageRequest1, 'unreadCount1':unreadCount1
-    }
-    return render(request, 'messageCenter.html', context)
-
-def adminMessageCenter(request):
-    page ='admin-message'
-    profile = request.user.adminprofile
     messageRequest = profile.messages.all()
     unreadCount = messageRequest.filter(is_read=False).count()
     context ={ 
         'messageRequest':messageRequest, 'unreadCount':unreadCount
     }
-    return render(request, 'message-Center.html', context)
+    return render(request, 'messageCenter.html', context)
+
 
 
 def viewMessage(request, pk):
@@ -50,17 +36,6 @@ def viewMessage(request, pk):
     context ={'message':message, 'unreadCount':unreadCount}
     return render(request, 'viewMessage.html',context )
 
-def viewAdminMessage(request, pk):
-    page = 'message'
-    profile = request.user.adminprofile
-    message = profile.messages.get(id=pk)
-    messageRequest = profile.messages.all()
-    unreadCount = messageRequest.filter(is_read=False).count()
-    if message.is_read == False:
-        message.is_read = True
-        message.save()
-    context ={'message':message, 'unreadCount':unreadCount}
-    return render(request, 'view-Message.html',context )
 
 
 
@@ -97,15 +72,57 @@ def createMessage(request, pk):
     return render(request, 'createMessage.html', context)
 
 
+
+def deleteMessage(request, pk):
+    profile = request.user.studentprofile
+    message = profile.messages.filter(id=pk)
+    
+    if request.method == 'POST':
+        message.delete()
+        redirect('message')
+
+    context ={'message':message}
+    return render(request, 'deleteMessage.html',context )
+
+
+
+#Admin & Staff message views here.
+@login_required(login_url='login')
+def adminMessageCenter(request):
+    page ='admin-message'
+    profile = request.user
+    messageRequest = profile.messages.all()
+    unreadCount = messageRequest.filter(is_read=False).count()
+    context ={ 
+        'messageRequest':messageRequest, 'unreadCount':unreadCount
+    }
+    return render(request, 'message-Center.html', context)
+
+
+
+def viewAdminMessage(request, pk):
+    page = 'message'
+    profile = request.user
+    message = profile.messages.get(id=pk)
+    messageRequest = profile.messages.all()
+    unreadCount = messageRequest.filter(is_read=False).count()
+    if message.is_read == False:
+        message.is_read = True
+        message.save()
+    context ={'message':message, 'unreadCount':unreadCount}
+    return render(request, 'view-Message.html',context )
+
+
+
 def createAdminMessage(request, pk):
-    recipient = AdminProfile.objects.get(id=pk)
+    recipient = User.objects.get(id=pk)
     form  = AdminMessageForm()
-    profile = request.user.adminprofile
+    profile = request.user
     messageRequest = profile.messages.all()
     unreadCount = messageRequest.filter(is_read=False).count()
     
     try:
-        sender = request.user.adminprofile
+        sender = request.user
     except:
         sender = None
 
@@ -130,20 +147,8 @@ def createAdminMessage(request, pk):
     return render(request, 'create-Message.html', context)
 
 
-
-def deleteMessage(request, pk):
-    profile = request.user.studentprofile
-    message = profile.messages.filter(id=pk)
-    
-    if request.method == 'POST':
-        message.delete()
-        redirect('message')
-
-    context ={'message':message}
-    return render(request, 'deleteMessage.html',context )
-
 def deleteAdminMessage(request, pk):
-    profile = request.user.studentprofile
+    profile = request.user
     message = profile.messages.filter(id=pk)
     
     if request.method == 'POST':
