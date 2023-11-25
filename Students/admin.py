@@ -2,7 +2,7 @@ from django.contrib import admin
 
 
 
-from .models import StudentEmergencyProfile, StudentProfile
+from .models import StudentEmergencyInfo, StudentProfile
 # Register your models here.
 admin.site.register(StudentProfile)
-admin.site.register(StudentEmergencyProfile)
+admin.site.register(StudentEmergencyInfo)

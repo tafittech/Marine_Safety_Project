@@ -38,7 +38,7 @@ class StudentProfile(models.Model):
         return str(self.user)
 
 
-class StudentEmergencyProfile(models.Model):
+class StudentEmergencyInfo(models.Model):
 
     emergency_name    =models.ForeignKey(StudentProfile, on_delete=models.DO_NOTHING, blank = True, null=True)
     relationship      = models.CharField(max_length=255, blank = True, null=True)
