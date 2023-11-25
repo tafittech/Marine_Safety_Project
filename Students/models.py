@@ -3,30 +3,33 @@ from django.contrib.auth.models import (
      AbstractBaseUser, AbstractUser,BaseUserManager
 )
 
-
+from Admin.models import User
 
 # Create your models here
-
-class StudentUser(AbstractUser):
-    class StudentType(models.TextChoices ):
-        FOREIGNER = 'FOREIGNER','foreigner'
-        LOCAL     = 'LOCAL','local'
-
-    base_student_type = StudentType.LOCAL
-
-    student_type = models.CharField(max_length=255 , choices= StudentType.choices) 
-
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.student_type = self.base_student_type
-            return super().save(*args, **kwargs)
-
-
 class StudentProfile(models.Model):
+    admin_id      = models.OneToOneField(User,on_delete=models.CASCADE, null=True , blank=True)
+    name          = models.CharField(max_length=255, blank=True, null=True)
+    profile_image = models.ImageField(blank=True, null=True, default= 'default1.jpeg')
+    email         = models.EmailField(max_length=255, blank=True, null=True)
+    address       = models.CharField(max_length=255, blank=True, null=True)
+    phone         = models.CharField(max_length=255, blank=True, null=True)
+    mobile        = models.CharField(max_length=255, blank=True, null=True)
+    created_at    = models.DateTimeField(auto_now_add=True)
+    updated_at    = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.admin_id)
+    
+
+class StudentInfo(models.Model):
     GENDER_TYPE ={
         ('MALE','male'),
         ('FEMALE','female')
     }
+    STUDENT_TYPE ={
+        ('LOCAL', 'local'), ('FOREIGN','foreign')
+    }
+    student_id         = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     email              = models.EmailField(max_length=255, blank = True, null=True)
     surname            = models.CharField(max_length=255, blank = True, null=True)
     first_name         = models.CharField(max_length=255, blank = True, null=True)
@@ -37,6 +40,7 @@ class StudentProfile(models.Model):
     date_of_birth      = models.CharField(max_length=255, blank = True, null=True)
     phone              = models.CharField(max_length=255, blank = True, null=True)
     mobile             = models.CharField(max_length=255, blank = True, null=True)
+    student_type       = models.CharField(default= 'local', choices= STUDENT_TYPE, max_length=255)
     nationality        = models.CharField(max_length=255, blank = True, null=True)
     national_id        = models.CharField(max_length=255, blank = True, null=True)
     birth_cert_number  = models.CharField(max_length=255, blank = True, null=True)

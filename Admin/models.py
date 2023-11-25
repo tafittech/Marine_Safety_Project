@@ -50,17 +50,18 @@ class UserManger(BaseUserManager):
 
  
 class User(AbstractBaseUser):
-    USER_TYPE = (
+    USER_TYPE = {
         (1,'admin'), (2,'student'),(3,'staff')
-    )
+    }
 
-    email     = models.EmailField(unique=True, max_length=255)
-    full_name = models.CharField(max_length=255, blank=True, null=True)
-    user_type = models.CharField(default=1, choices=USER_TYPE, max_length=20)
-    active    = models.BooleanField(default=True)# can login  
-    staff     = models.BooleanField(default=False)# staff user non superuser
-    admin     = models.BooleanField(default=False)#superuser
-    timestamp = models.DateTimeField(auto_now_add=True)
+    email         = models.EmailField(unique=True, max_length=255)
+    full_name     = models.CharField(max_length=255, blank=True, null=True)
+    user_type     = models.CharField(default=1, choices=USER_TYPE, max_length=20)
+    active        = models.BooleanField(default=True)# can login  
+    staff         = models.BooleanField(default=False)# staff user non superuser
+    admin         = models.BooleanField(default=False)#superuser
+    created_at    = models.DateTimeField(auto_now_add=True)
+    updated_at    = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD  = 'email' #username
     REQUIRED_FIELDS = ['full_name'] #python manage.py createsuperuser
@@ -96,7 +97,7 @@ class User(AbstractBaseUser):
         return self.active
     
 class AdminProfile(models.Model):
-    user          = models.OneToOneField(User,on_delete=models.CASCADE, null=True , blank=True)
+    admin_id       = models.OneToOneField(User,on_delete=models.CASCADE, null=True , blank=True)
     name          = models.CharField(max_length=255, blank=True, null=True)
     profile_image = models.ImageField(blank=True, null=True, default= 'default1.jpeg')
     email         = models.EmailField(max_length=255, blank=True, null=True)
@@ -105,6 +106,26 @@ class AdminProfile(models.Model):
     mobile        = models.CharField(max_length=255, blank=True, null=True)
     staff_info    = models.CharField(max_length=200, blank=True, null=True)
     bio_info      = models.TextField(max_length=500, blank=True, null=True)
+    created_at    = models.DateTimeField(auto_now_add=True)
+    updated_at    = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
-        return str(self.user)
+        return str(self.admin_id)
+
+class StaffProfile(models.Model):
+    admin_id       = models.OneToOneField(User,on_delete=models.CASCADE, null=True , blank=True)
+    name          = models.CharField(max_length=255, blank=True, null=True)
+    profile_image = models.ImageField(blank=True, null=True, default= 'default1.jpeg')
+    email         = models.EmailField(max_length=255, blank=True, null=True)
+    address       = models.CharField(max_length=255, blank=True, null=True)
+    phone         = models.CharField(max_length=255, blank=True, null=True)
+    mobile        = models.CharField(max_length=255, blank=True, null=True)
+    staff_info    = models.CharField(max_length=200, blank=True, null=True)
+    bio_info      = models.TextField(max_length=500, blank=True, null=True)
+    created_at    = models.DateTimeField(auto_now_add=True)
+    updated_at    = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return str(self.admin_id)
