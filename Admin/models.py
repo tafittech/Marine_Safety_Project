@@ -51,7 +51,7 @@ class UserManger(BaseUserManager):
  
 class User(AbstractBaseUser):
     USER_TYPE = {
-        (1,'admin'), (2,'student'),(3,'staff')
+        (1,'admin'), (2,'staff'),(3,'student')
     }
 
     email         = models.EmailField(unique=True, max_length=255)

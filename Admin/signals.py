@@ -2,7 +2,7 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
 
-from .models import AdminProfile
+from .models import AdminProfile, StaffProfile
 
 User = get_user_model()
 
@@ -10,32 +10,58 @@ User = get_user_model()
 @receiver(post_save,sender=User)
 def createStaff(sender, instance, created,*args, **kwargs):
     if created:
-        user    = instance
-        profile = AdminProfile.objects.create(
-            user = user,      
-            email = user.email,
-            name  = user.full_name 
+        if instance.user_type == 1:
+            admin_id    = instance
+            profile = AdminProfile.objects.create(
+                admin_id = admin_id,      
+                email = admin_id.email,
+                name  = admin_id.full_name 
         )
-        print('profile created' )
+        if instance.user_type == 2:
+            admin_id    = instance
+            profile = AdminProfile.objects.create(
+                admin_id = admin_id,      
+                email = admin_id.email,
+                name  = admin_id.full_name 
+        ) 
 
 
 
 @receiver(post_save, sender= AdminProfile)  
 def updateProfile(sender, instance ,created, *args, **kwargs ):
     profile = instance
-    user    = profile.user
+    admin_id    = profile.admin_id
     if created == False:
-        user.full_name = profile.name
-        user.email = profile.email
-        user.address = profile.address
-        user.phone   =  profile.phone
-        user.mobile  =  profile.mobile
-        user.staff_info = profile.staff_info
-        user.save( )
+        admin_id.full_name = profile.name
+        admin_id.email = profile.email
+        admin_id.address = profile.address
+        admin_id.phone   =  profile.phone
+        admin_id.mobile  =  profile.mobile
+        admin_id.staff_info = profile.staff_info
+        admin_id.save( )
 
+
+@receiver(post_save, sender= StaffProfile)  
+def updateProfile(sender, instance ,created, *args, **kwargs ):
+    profile = instance
+    admin_id    = profile.admin_id
+    if created == False:
+        admin_id.full_name = profile.name
+        admin_id.email = profile.email
+        admin_id.address = profile.address
+        admin_id.phone   =  profile.phone
+        admin_id.mobile  =  profile.mobile
+        admin_id.staff_info = profile.staff_info
+        admin_id.save( )
 
 
 @receiver(post_delete,sender=AdminProfile)
 def deleteStaff(sender,instance,*args, **kwargs):
-    user = instance.user 
-    user.delete()
+    admin_id = instance.admin_id 
+    admin_id.delete()
+
+
+@receiver(post_delete,sender=StaffProfile)
+def deleteStaff(sender,instance,*args, **kwargs):
+    admin_id = instance.admin_id
+    admin_id.delete()
