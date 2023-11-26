@@ -43,7 +43,8 @@ class StudentRegisterForm(UserCreationForm):
         user = super(StudentRegisterForm,self).save(commit=True )
         user.set_password(self.cleaned_data["password1"])
         user.active =True
-        user.user_type=2
+        user.student = True
+        user.user_type=3
         if commit:
             user.save()
         return user

@@ -45,6 +45,7 @@ class RegisterForm(UserCreationForm):
         user.set_password(self.cleaned_data["password1"])
         user.active =True
         user.staff=True
+        user.user_type = 2
         if commit:
             user.save()
         return user

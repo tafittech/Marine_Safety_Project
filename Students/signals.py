@@ -10,9 +10,9 @@ from Admin.models import User
 @receiver(post_save,sender=User)
 def createStaff(sender, instance, created,*args, **kwargs):
     if created:
-        if instance.user_type == 2:
+        if instance.student == True:
             user    = instance
-            profile = StudentProfile.objects.create(
+            StudentProfile.objects.create(
                 user = user,      
                 email = user.email,
                 first_name = user.first_name,
