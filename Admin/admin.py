@@ -5,7 +5,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin  import UserAdmin as BaseUserAdmin
 from .forms import UserAdminChangeForm, AdminCreationForm
 from .models import (
-    AdminProfile
+    AdminProfile,StaffProfile
     
 )
 
@@ -48,5 +48,12 @@ class ProfileAdmin(admin.ModelAdmin):
         model = AdminProfile
 
 admin.site.register(AdminProfile, ProfileAdmin)
+
+class ProfileStaff(admin.ModelAdmin):
+    search_fields = ['first_name', 'last_name']
+    class Meta:
+        model = StaffProfile
+
+admin.site.register(StaffProfile, ProfileStaff)
 
 
