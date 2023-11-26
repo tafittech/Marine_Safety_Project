@@ -43,6 +43,7 @@ class RegisterForm(UserCreationForm):
         # save the provided password in hashed format
         user = super(RegisterForm,self).save(commit=True    )
         user.set_password(self.cleaned_data["password1"])
+        user.user_type = 2
         user.active =True
         user.staff=True
         if commit:
