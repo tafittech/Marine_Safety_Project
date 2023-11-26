@@ -5,7 +5,8 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin  import UserAdmin as BaseUserAdmin
 from .forms import UserAdminChangeForm, AdminCreationForm
 from .models import (
-    AdminProfile
+    AdminProfile,
+    StaffProfile
     
 )
 
@@ -48,5 +49,6 @@ class ProfileAdmin(admin.ModelAdmin):
         model = AdminProfile
 
 admin.site.register(AdminProfile, ProfileAdmin)
+admin.site.register(StaffProfile)
 
 
