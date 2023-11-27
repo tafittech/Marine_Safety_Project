@@ -106,9 +106,9 @@ class adminUpdateForm(ModelForm):
         fields =[
             'first_name', 'last_name', 'profile_image','email','address','phone','mobile','staff_info','bio_info'
         ]
-        labels =[{
-            'first_name':'First Name', 'last_name':'Surname', 'profile_image':'Profile Photo','email':'Email Address','address': 'Home Address/ Location ','phone':'Phone Number','mobile':'Mobile Number','staff_info':'Position','bio_info':'About'
-        }]
+        labels ={
+            'first_name':'First Name', 'last_name':'Surname', 'profile_image':'Profile Photo','email':'Email Address', 'address': 'Home Address/ Location ','phone':'Phone Number', 'mobile':'Mobile Number','staff_info':'Position', 'bio_info':'About'
+        }
 
         def __init__(self, *args,**kwargs):
             super(adminUpdateForm, self).__init__(*args,*kwargs)

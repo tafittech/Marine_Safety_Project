@@ -15,22 +15,18 @@ from .forms import Message_Form, AdminMessageForm
 
 @login_required(login_url='student-login')
 def messageCenter(request):
-    profile = request.user.studentprofile
-    profile1 = request.user.studentprofile
+    profile = request.user.studentuser.studentprofile
     messageRequest = profile.messages.all()
-    messageRequest1 = profile1.messages.all()
     unreadCount = messageRequest.filter(is_read=False).count()
-    unreadCount1 = messageRequest1.filter(is_read=False).count()
     context ={ 
-        'messageRequest':messageRequest, 'unreadCount':unreadCount,
-        'messageRequest1':messageRequest1, 'unreadCount1':unreadCount1
+        'messageRequest':messageRequest, 'unreadCount':unreadCount
     }
     return render(request, 'messageCenter.html', context)
 
 
 def viewMessage(request, pk):
     page = 'message'
-    profile = request.user.studentprofile
+    profile = request.user.studentuser.studentprofile
     message = profile.messages.get(id=pk)
     messageRequest = profile.messages.all()
     unreadCount = messageRequest.filter(is_read=False).count()
@@ -46,12 +42,12 @@ def viewMessage(request, pk):
 def createMessage(request, pk):
     recipient = StudentProfile.objects.get(id=pk)
     form  = Message_Form()
-    profile = request.user.studentprofile
+    profile = request.user.studentuser.studentprofile
     messageRequest = profile.messages.all()
     unreadCount = messageRequest.filter(is_read=False).count()
     
     try:
-        sender = request.user.studentprofile
+        sender = request.user.studentuser.studentprofile
     except:
         sender = None
 
@@ -76,6 +72,17 @@ def createMessage(request, pk):
     return render(request, 'createMessage.html', context)
 
 
+def deleteMessage(request, pk):
+    profile = request.user.studentuser.studentprofile
+    message = profile.messages.filter(id=pk)
+    
+    if request.method == 'POST':
+        message.delete()
+        redirect('message')
+
+    context ={'message':message}
+    return render(request, 'deleteMessage.html',context )
+
 
 
 #admin message-center view here.
@@ -89,19 +96,6 @@ def adminMessageCenter(request):
         'messageRequest':messageRequest, 'unreadCount':unreadCount
     }
     return render(request, 'message-Center.html', context)
-
-
-
-def deleteMessage(request, pk):
-    profile = request.user.studentprofile
-    message = profile.messages.filter(id=pk)
-    
-    if request.method == 'POST':
-        message.delete()
-        redirect('message')
-
-    context ={'message':message}
-    return render(request, 'deleteMessage.html',context )
 
 
 
@@ -132,7 +126,7 @@ def createAdminMessage(request, pk):
         sender = None
 
     if request.method == 'POST':
-        form = Message_Form(request.POST)
+        form = AdminMessageForm(request.POST)
         if form.is_valid():
             message = form.save(commit=False)
             message.sender = sender
@@ -144,7 +138,7 @@ def createAdminMessage(request, pk):
             message.save()
 
             messages.success(request, 'Your message was successfully sent!')
-            return redirect('message')
+            return redirect('admin-message')
     context={
         'recipient':recipient,'unreadCount':unreadCount,
         'form':form,
@@ -153,7 +147,7 @@ def createAdminMessage(request, pk):
 
 
 def deleteAdminMessage(request, pk):
-    profile = request.user.studentprofile
+    profile = request.user.adminprofile
     message = profile.messages.filter(id=pk)
     
     if request.method == 'POST':
@@ -162,11 +156,6 @@ def deleteAdminMessage(request, pk):
 
     context ={'message':message}
     return render(request, 'delete-Message.html',context )
-
-
-
-
-
 
 
     

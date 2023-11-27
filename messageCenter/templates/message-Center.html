@@ -59,7 +59,7 @@
                             </div>
                             <div class="media-body">
                                 <div class="media-heading">
-                                    <a href="{% url 'read-message' m.id %}" class="m-r-10">{{m.name}}</a>
+                                    <a href="{% url 'admin-view' m.id %}" class="m-r-10">{{m.name}}</a>
                                     <span class="badge bg-primary">{{m.subject}}</span>
                                     <small class="float-right text-muted"><time class="hidden-sm-down" datetime="2017">{{m.created}}</time><i class="zmdi zmdi-attachment-alt"></i> </small>
                                     <button class="btn btn-default"><span class="fa fa-trash-o"></span></button>
