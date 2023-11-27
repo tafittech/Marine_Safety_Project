@@ -27,16 +27,6 @@ def messageCenter(request):
     }
     return render(request, 'messageCenter.html', context)
 
-def adminMessageCenter(request):
-    page ='admin-message'
-    profile = request.user.adminprofile
-    messageRequest = profile.messages.all()
-    unreadCount = messageRequest.filter(is_read=False).count()
-    context ={ 
-        'messageRequest':messageRequest, 'unreadCount':unreadCount
-    }
-    return render(request, 'message-Center.html', context)
-
 
 def viewMessage(request, pk):
     page = 'message'
@@ -50,17 +40,6 @@ def viewMessage(request, pk):
     context ={'message':message, 'unreadCount':unreadCount}
     return render(request, 'viewMessage.html',context )
 
-def viewAdminMessage(request, pk):
-    page = 'message'
-    profile = request.user.adminprofile
-    message = profile.messages.get(id=pk)
-    messageRequest = profile.messages.all()
-    unreadCount = messageRequest.filter(is_read=False).count()
-    if message.is_read == False:
-        message.is_read = True
-        message.save()
-    context ={'message':message, 'unreadCount':unreadCount}
-    return render(request, 'view-Message.html',context )
 
 
 
@@ -97,6 +76,49 @@ def createMessage(request, pk):
     return render(request, 'createMessage.html', context)
 
 
+
+
+#admin message-center view here.
+
+def adminMessageCenter(request):
+    page ='admin-message'
+    profile = request.user.adminprofile
+    messageRequest = profile.messages.all()
+    unreadCount = messageRequest.filter(is_read=False).count()
+    context ={ 
+        'messageRequest':messageRequest, 'unreadCount':unreadCount
+    }
+    return render(request, 'message-Center.html', context)
+
+
+
+def deleteMessage(request, pk):
+    profile = request.user.studentprofile
+    message = profile.messages.filter(id=pk)
+    
+    if request.method == 'POST':
+        message.delete()
+        redirect('message')
+
+    context ={'message':message}
+    return render(request, 'deleteMessage.html',context )
+
+
+
+def viewAdminMessage(request, pk):
+    page = 'message'
+    profile = request.user.adminprofile
+    message = profile.messages.get(id=pk)
+    messageRequest = profile.messages.all()
+    unreadCount = messageRequest.filter(is_read=False).count()
+    if message.is_read == False:
+        message.is_read = True
+        message.save()
+    context ={'message':message, 'unreadCount':unreadCount}
+    return render(request, 'view-Message.html',context )
+
+
+
 def createAdminMessage(request, pk):
     recipient = AdminProfile.objects.get(id=pk)
     form  = AdminMessageForm()
@@ -129,18 +151,6 @@ def createAdminMessage(request, pk):
     }
     return render(request, 'create-Message.html', context)
 
-
-
-def deleteMessage(request, pk):
-    profile = request.user.studentprofile
-    message = profile.messages.filter(id=pk)
-    
-    if request.method == 'POST':
-        message.delete()
-        redirect('message')
-
-    context ={'message':message}
-    return render(request, 'deleteMessage.html',context )
 
 def deleteAdminMessage(request, pk):
     profile = request.user.studentprofile
