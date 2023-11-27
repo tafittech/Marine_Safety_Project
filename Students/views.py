@@ -94,8 +94,7 @@ def studentAccount(request):
 
 def editStudentAccount(request):
     profile = request.user.studentuser.studentprofile
-    form     = StudentUpdateForm(instance=profile)
-
+    form     = StudentUpdateForm()
     if request.method == 'POST':
         form = StudentUpdateForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
