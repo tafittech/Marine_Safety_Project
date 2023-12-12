@@ -1,12 +1,13 @@
 from django.urls import path
 
 from .views import (
-    addCourse, addCourseSave
+    addCourse,courseRegistration
 )
 
 
 
 urlpatterns=[
     path('course/', addCourse, name= 'course'),
-    path('add-course/', addCourseSave, name= 'add-course'),
+    path('course/register/', courseRegistration, name='course-register')
+    
 ]

@@ -13,12 +13,16 @@
                             <h3 class="card-title">Add Course</h3>
                         </div>
                         <!--Card header for form -->
-                        <form role="form"  method="post" action="{% url 'add-course' %}">
+                        <form role="form"  method="post" action="{% url 'course' %}">
                             {%  csrf_token%}
+                            {% for f in form%}
                             <div class="card-group">
-                                <label>Course Name</label>
-                                <input type="text" class="form-control" name=" course" placeholder="Enter Course" >
+                                <label class="input-group-text">{{f.label}}</label>
+                                {{f}}
+                                <input class="btn btn-primary" type="submit" value="Enter Course" />
                             </div>
+                            {% endfor %}
+                            
                         </form>
 
                     </div>

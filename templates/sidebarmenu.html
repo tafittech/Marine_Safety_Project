@@ -27,6 +27,12 @@
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="{% url 'course-register' %}">
+          <span data-feather="file" class="align-text-bottom"></span>
+          Register for Course
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="#">
           <span data-feather="file" class="align-text-bottom"></span>
           Exams 
@@ -72,16 +78,16 @@
       </li>
     </ul>
       {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'course-register' %}">
+          <span data-feather="file" class="align-text-bottom"></span>
+          Register for Course
+        </a>
+      </li>
        <li class="nav-item">
         <a class="nav-link" href="{% url 'student' %}">
           <span data-feather="users" class="align-text-bottom"></span>
           Student 
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'course' %}">
-          <span data-feather="file" class="align-text-bottom"></span>
-          Add course 
         </a>
       </li>
       <li class="nav-item">

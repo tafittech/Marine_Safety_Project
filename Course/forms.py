@@ -19,4 +19,4 @@ class addCourse_Form(ModelForm):
         super(addCourse_Form, self).__init__(*args,*kwargs)
 
         for name, field in self.fields.items():
-            field.widget.attrs.update({'class':'input-group-text'})
+            field.widget.attrs.update({'class':'form-group-text'})
