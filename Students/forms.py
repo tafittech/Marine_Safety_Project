@@ -86,9 +86,28 @@ class StaffRegisterForm(UserCreationForm):
             user.save()
         return user
 
-
-
 class StudentUpdateForm(ModelForm):
+
+    class Meta:
+        model  = StudentProfile
+        fields =[
+            'first_name','last_name', 'profile_image','address',
+            'phone','mobile',
+        ] 
+        labels ={
+            'first_name':'First Name','last_name':'Surname', 'profile_image':'Photo',
+            'address':'Address','phone': 'Phone Number','mobile':'Mobile Number',
+        }
+
+    def __init__(self, *args,**kwargs):
+        super(StudentUpdateForm, self).__init__(*args,*kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class':'input-group-text'})
+
+
+
+class StudentCourseInfoForm(ModelForm):
 
     class Meta:
         model  = StudentProfile
@@ -105,7 +124,7 @@ class StudentUpdateForm(ModelForm):
         }
 
     def __init__(self, *args,**kwargs):
-        super(StudentUpdateForm, self).__init__(*args,*kwargs)
+        super(StudentCourseInfoForm, self).__init__(*args,*kwargs)
 
         for name, field in self.fields.items():
             field.widget.attrs.update({'class':'input-group-text'})

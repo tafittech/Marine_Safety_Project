@@ -7,8 +7,9 @@ from django.contrib.auth import (
 
 from  .models import StudentUser, StudentProfile
 from .forms import(
-     StudentRegisterForm, StudentUpdateForm, 
+     StudentRegisterForm, 
      StaffRegisterForm,
+     StudentUpdateForm,
 )
 
 
@@ -94,9 +95,9 @@ def studentAccount(request):
 
 def editStudentAccount(request):
     profile = request.user.studentuser.studentprofile
-    form     = StudentUpdateForm()
+    form     =StudentUpdateForm()
     if request.method == 'POST':
-        form = StudentUpdateForm(request.POST, request.FILES, instance=profile)
+        form =StudentUpdateForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save() 
             return redirect('student-account')

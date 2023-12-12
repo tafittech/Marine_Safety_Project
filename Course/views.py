@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.shortcuts import render, redirect
 
-from Students.forms import StudentUpdateForm
+from Students.forms import StudentCourseInfoForm
 from .models import (
     Course
 )
@@ -30,7 +30,16 @@ def addCourse(request):
 
 def courseRegistration(request):
     st_user = request.user.studentuser.studentprofile
-    reg_form= StudentUpdateForm()
+    reg_form= StudentCourseInfoForm()
+    if request.method == 'POST':
+        reg_student = StudentCourseInfoForm(request.POST, request.FILES,instance=st_user )
+        try:
+            reg_student.save()
+            messages.success(request,"Successfully Registered Student")
+            return redirect('student-account')
+        except:
+            messages.error(request, "Failure to Register Student")
+            return redirect('course-register')
     context ={
         'user':st_user, 'form':reg_form,
     }
