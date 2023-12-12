@@ -1,1 +1,75 @@
 {% extends 'base.html' %}
+
+
+{% block content %}
+<section class="container-fluid align-items-center" style=" background-color: #e5edef;">
+  <div class="container py-5">
+    <div class="row">
+      <!--- Breadcrumb start here --->
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'student' %}">Profile</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Course Registration</li>
+          </ol>
+        </nav>
+      </div>
+      <!----Start of profile card-->
+      <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img src="{{user.profile_image.url}}" alt="avatar"
+              class="rounded-circle img-fluid" style="width: 150px;">
+            <div class="row align-content-center" >
+              <div class="col-sm-2">
+                <p></p>
+              </div>
+            <div class=" col-lg-4 ">                  
+              <h5 class="my-3 text-md-end" >{{user.first_name}}</h5>                  
+            </div>
+            <div class=" col-lg-4 ">                  
+              <h5 class="my-3 text-md-start">{{user.last_name}}</h5>                  
+            </div> 
+            </div>
+            <p class="text-muted mb-1">{{user.student_type}}</p>
+            <p class="text-muted mb-4">{{user.address}}</p>
+            <div class="d-flex justify-content-center mb-2">
+              <a href="{% url 'edit-student-account' %}" type="button" class="btn btn-primary">edit</a>             
+            </div>
+            <div class="d-flex justify-content-center mb-2">
+              <a href="{% url 'message' %}" type="button" class="btn btn-outline-primary">Check Inbox</a>
+             <a href="{% url 'send-message' user.id %}" class="btn btn-outline-primary ms-1">Send Message</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!---Course Registration Form-->
+      <div class="col-lg-8">
+        <div class="card mb-4">
+          
+          <div class="card-body">
+            <form method="post"    action="{% url 'course-register'%}  "    enctype="multipart/form-data">
+          {% csrf_token %}
+             {% for e in form%}
+            <div class="row">
+               
+              <div class="col-sm-12 m-sm-2 input-group-text ">
+                <p class=" input-group-text mb-0">{{e.label}}</p>
+                {{e}}  
+              </div>
+               
+            </div>
+          {% endfor %}
+            <input class="m-sm-2 " type="submit" value="update" /> 
+            </form> 
+          </div>
+         
+        </div> 
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

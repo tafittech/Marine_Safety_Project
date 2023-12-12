@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.shortcuts import render, redirect
 
-from Students.forms import StudentRegisterForm
+from Students.forms import StudentUpdateForm
 from .models import (
     Course
 )
@@ -29,6 +29,10 @@ def addCourse(request):
 
 
 def courseRegistration(request):
-    
-    return render ( request, 'CourseRegistration.html',{}) 
+    st_user = request.user.studentuser.studentprofile
+    reg_form= StudentUpdateForm()
+    context ={
+        'user':st_user, 'form':reg_form,
+    }
+    return render ( request, 'CourseRegistration.html', context) 
                
