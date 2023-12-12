@@ -21,17 +21,17 @@
     
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       {% if messages %}
-            <div class="alert alert-danger" role="alert">
-                
-          <ul class="messages">
-        {% for message in messages %}
-              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
-        {{ message }}
-              </li>
+        {% for message in messages %} 
+        {% if message.tags == 'error'%}
+        <div class="alert alert-danger" style="margin-top: 10px;">{{ message}}</div>
+        {% endif %}
+        {% if message.tags == 'warning' %}
+        <div class="alert alert-success" style="margin-top: 10px;">{{ message}}</div>
+        {% endif %}
+        {% if message.tags == 'success' %}
+        <div class="alert alert-success" style="margin-top: 10px;">{{ message}}</div>
+        {% endif %}
         {% endfor %}
-          </ul>
-            </div> 
       {% endif %}
        
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
